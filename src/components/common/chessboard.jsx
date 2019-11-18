@@ -1,12 +1,26 @@
 import React, { Component } from "react";
-import startingPosition from "../others/startingPosition";
-import { boardCoordinates } from "../others/boardCoordinates";
+import BoardField from "./boardField";
 
-const Chessboard = ({ position, playerColour }) => {
-  const boardCoordinatesByPlayerSide =
-    playerColour === "white" ? boardCoordinates : boardCoordinates.reverse();
-  console.log(boardCoordinatesByPlayerSide);
-  return <div></div>;
+const Chessboard = ({ position }) => {
+  const boardWithPieces = position.map((value, index) => (
+    <BoardField
+      color={index % 2 ? "black" : "white"}
+      piece={value.piece}
+      key={index}
+    />
+  ));
+
+  return (
+    <table>
+      <tbody>
+        {Array.apply(null, Array(8)).map((value, index) => (
+          <tr key={index}>
+            {boardWithPieces.slice(index * 8, index * 8 + 8).map(e => e)}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
 };
 
 export default Chessboard;

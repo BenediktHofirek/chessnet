@@ -1,26 +1,23 @@
 import React, { Component } from "react";
 import Notation from "./notation";
 import Chessboard from "./chessboard";
-import startingPosition from "../others/startingPosition";
-import { whileStatement } from "@babel/types";
+import { createStartingPosition } from "../others/supportFunctions";
 
 export default class Game extends Component {
   constructor() {
     super();
     this.state = {
-      position: startingPosition,
-      playerColour: "white",
+      position: createStartingPosition("white"),
       gameRecord: []
     };
   }
+
   render() {
-    const { position, gameRecord, playerColour } = this.state;
+    const { position, gameRecord } = this.state;
+    console.log(position);
     return (
       <div>
-        <Chessboard 
-        position={position} 
-        playerColour={playerColour}
-        />
+        <Chessboard position={position} />
         <Notation gameRecord={gameRecord} />
       </div>
     );
