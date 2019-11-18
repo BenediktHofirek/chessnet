@@ -1,20 +1,22 @@
 import React, { Component } from "react";
 import BoardField from "./boardField";
 
-const Chessboard = ({ position }) => {
+const Chessboard = ({ position, handleFieldClick }) => {
   const boardWithPieces = position.map((value, index) => (
     <BoardField
-      color={index % 2 ? "black" : "white"}
+      index={index}
       piece={value.piece}
       key={index}
+      handleFieldClick={handleFieldClick}
+      clicked={!!value.clicked}
     />
   ));
 
   return (
-    <table>
-      <tbody>
+    <table id="chessboard">
+      <tbody className="board">
         {Array.apply(null, Array(8)).map((value, index) => (
-          <tr key={index}>
+          <tr key={index} className="board-row">
             {boardWithPieces.slice(index * 8, index * 8 + 8).map(e => e)}
           </tr>
         ))}

@@ -1,0 +1,38 @@
+* {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+}
+
+#chessboard {
+  display: flex;
+  margin: auto;
+
+  .board {
+    display: flex;
+    margin: auto;
+    flex-direction: column;
+    border: 5px solid black;
+
+    .board-row {
+      display: flex;
+      flex-direction: row;
+
+      .board-field {
+        display: block;
+        border: 2px solid black;
+        width: 80px;
+        height: 80px;
+      }
+      .white {
+        background: rgb(224, 224, 153);
+      }
+      .black {
+        background: rgb(109, 109, 96);
+      }
+      .clicked {
+        border: 2px solid red;
+      }
+    }
+  }
+}

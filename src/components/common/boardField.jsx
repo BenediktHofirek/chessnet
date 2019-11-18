@@ -12,8 +12,8 @@ import blackQueen from "../others/boardPieces/blackQueen.png";
 import blackKing from "../others/boardPieces/blackKing.png";
 import blackPawn from "../others/boardPieces/blackPawn.png";
 
-const BoardField = ({ colour, piece, id }) => {
-  const pieceImage = piece => {
+const BoardField = ({ index, piece, handleFieldClick, clicked }) => {
+  const selectPieceImage = () => {
     switch (piece) {
       case "blackRook":
         return blackRook;
@@ -41,9 +41,20 @@ const BoardField = ({ colour, piece, id }) => {
         return whitePawn;
     }
   };
+  const getColour = () => {
+    if (Math.trunc(index / 8) % 2) {
+      return index % 2 ? "white" : "black";
+    } else {
+      return index % 2 ? "black" : "white";
+    }
+  };
+
   return (
-    <td style={{ backgroundColor: colour }} id={id}>
-      <img src={pieceImage(piece)} style={{ width: 30, height: 30 }} />
+    <td
+      className={`board-row ${getColour()} ${clicked ? "clicked" : ""}`}
+      onClick={() => handleFieldClick(piece, index)}
+    >
+      <img src={selectPieceImage(piece)} style={{ width: 30, height: 30 }} />
     </td>
   );
 };
