@@ -27,5 +27,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "main": "index.js",
+  "repository": "https://github.com/utility4u/chessnet.git",
+  "author": "utility4u <benedikthofirek@gmail.com>",
+  "license": "MIT"
 }
