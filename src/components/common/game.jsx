@@ -1,17 +1,13 @@
 import React, { Component } from "react";
 import Notation from "./notation";
 import Chessboard from "./chessboard";
-import { pawnMove, promotion } from "../pieceMoves/pawnMove";
-import rookMove from "../pieceMoves/rookMove";
-import bishopMove from "../pieceMoves/bishopMove";
-import knightMove from "../pieceMoves/knightMove";
-import { kingMove, castling } from "../pieceMoves/kingMove";
-import queenMove from "../pieceMoves/queenMove";
+import castling from "../pieceMoves/supportFunctions/castling";
+import checkCheck from "../pieceMoves/supportFunctions/checkCheck";
+import checkMove from "../pieceMoves/supportFunctions/checkMove";
 
 export default class Game extends Component {
   constructor() {
     super();
-    this.promotion = promotion.bind(this);
     this.state = {
       position: this.createStartingPosition("white"),
       playerColour: "",
@@ -71,8 +67,7 @@ export default class Game extends Component {
   };
 
   handleFieldClick = (piece, index) => {
-    const { position, playerColour, sideToMove, castlingRights } = this.state;
-    const castlingR = [...castlingRights];
+    const { position, playerColour, sideToMove } = this.state;
     const firstClickedField = position.find(e => e.clicked);
 
     //if player did not clicked to any piece yet
@@ -89,7 +84,6 @@ export default class Game extends Component {
       }
       return;
     } else {
-      let moveAllowed = false; //true, false, or in special case "castling" (which means true and make castle)
       const newPosition = [...position];
       const secondClickedField = position[index];
 
@@ -107,93 +101,108 @@ export default class Game extends Component {
         });
         this.setState({ position: newPosition });
         return;
+      } else {
+        this.handleMove(firstClickedField, secondClickedField);
       }
+    }
+  };
 
-      // 5 because "white" and also "black" have both length 5
-      switch (firstClickedField.piece.substring(5)) {
-        case "Rook":
-          moveAllowed = rookMove(
-            firstClickedField,
-            secondClickedField,
-            position,
-            castlingR
-          );
-          break;
-        case "Knight":
-          moveAllowed = knightMove(
-            firstClickedField,
-            secondClickedField,
-            position
-          );
-          break;
-        case "Bishop":
-          moveAllowed = bishopMove(
-            firstClickedField,
-            secondClickedField,
-            position
-          );
-          break;
-        case "Queen":
-          moveAllowed = queenMove(
-            firstClickedField,
-            secondClickedField,
-            position
-          );
-          break;
-        case "King":
-          moveAllowed = kingMove(
-            firstClickedField,
-            secondClickedField,
-            position,
-            castlingR
-          );
-          break;
-        case "Pawn":
-          moveAllowed = pawnMove(
-            firstClickedField,
-            secondClickedField,
-            position,
-            sideToMove
-          );
-          break;
-        default:
-          break;
+  handleMove = (firstClickedField, secondClickedField) => {
+    const { castlingRights } = this.state;
+    const castlingR = [...castlingRights];
+    const moveAllowed = this.allowMove(
+      firstClickedField,
+      secondClickedField,
+      castlingR
+    );
+
+    if (moveAllowed) {
+      this.makeMove(
+        firstClickedField,
+        secondClickedField,
+        castlingR,
+        moveAllowed
+      );
+    }
+  };
+
+  allowMove = (firstClickedField, secondClickedField, castlingR) => {
+    const { position, sideToMove } = this.state;
+    //true, false, or in special case "castling" (which means true and make castle)
+    const moveAllowed = checkMove(
+      firstClickedField,
+      secondClickedField,
+      position,
+      castlingR,
+      sideToMove
+    );
+
+    if (
+      moveAllowed &&
+      checkCheck(
+        firstClickedField,
+        secondClickedField,
+        position,
+        moveAllowed,
+        sideToMove
+      ) 
+    ) {
+      return moveAllowed;
+    }
+  };
+
+  makeMove = (
+    firstClickedField,
+    secondClickedField,
+    castlingR,
+    moveAllowed
+  ) => {
+    const { position } = this.state;
+    const newPosition = [...position];
+    //if the move is with the king and castling is allowed and was made, nothing else needs to be done
+    if (moveAllowed === "castling") {
+      castling(secondClickedField.coordinate, newPosition, castlingR);
+    } else {
+      const index = position.findIndex(
+        e => e.coordinate === secondClickedField.coordinate
+      );
+      newPosition[index].piece = firstClickedField.piece;
+      if (firstClickedField.piece.includes("Pawn")) {
+        this.promotion(newPosition);
       }
+      newPosition[
+        newPosition.findIndex(
+          field => field.coordinate === firstClickedField.coordinate
+        )
+      ].piece = "";
+    }
+    //reset clicked piece
+    for (let x = 0; x < newPosition.length; x++) {
+      newPosition[x].clicked = false;
+    }
 
-      if (moveAllowed) {
-        console.log(
-          Math.abs(
-            firstClickedField.coordinate.charCodeAt(0) -
-              secondClickedField.coordinate.charCodeAt(0)
-          ),
-          castlingR.includes(`h${sideToMove === "white" ? 1 : 8}`)
-        );
-        //if the move is with the king and castling is allowed and was made, nothing else needs to be done
-        if (moveAllowed === "castling") {
-          castling(secondClickedField.coordinate, newPosition, castlingR);
-        } else {
-          newPosition[index].piece = firstClickedField.piece;
-          if (firstClickedField.piece.includes("Pawn")) {
-            this.promotion(newPosition);
-          }
-          newPosition[
-            newPosition.findIndex(
-              field => field.coordinate === firstClickedField.coordinate
-            )
-          ].piece = "";
-        }
-        //reset clicked piece
-        for (let x = 0; x < newPosition.length; x++) {
-          newPosition[x].clicked = false;
-        }
+    this.setState(state => {
+      return {
+        position: newPosition,
+        sideToMove: state.sideToMove === "white" ? "black" : "white",
+        castlingRights: castlingR
+      };
+    });
+  };
 
-        this.setState(state => {
-          return {
-            position: newPosition,
-            sideToMove: state.sideToMove === "white" ? "black" : "white",
-            castlingRights: castlingR
-          };
-        });
+  promotion = newPosition => {
+    //WIP promotion to other pieces
+    for (let x = 0; x < newPosition.length; x++) {
+      if (
+        Number(newPosition[x].coordinate[1]) === 1 &&
+        newPosition[x].piece === "blackPawn"
+      ) {
+        newPosition[x].piece = "blackQueen";
+      } else if (
+        Number(newPosition[x].coordinate[1]) === 8 &&
+        newPosition[x].piece === "whitePawn"
+      ) {
+        newPosition[x].piece = "whiteQueen";
       }
     }
   };

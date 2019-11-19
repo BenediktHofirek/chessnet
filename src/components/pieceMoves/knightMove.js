@@ -1,4 +1,4 @@
-export default function knightMove(firstF, secondF, position) {
+export default function knightMove(firstF, secondF) {
   //if there is figure of the same player on both fields
   if (firstF.piece.slice(0, 5) === secondF.piece.slice(0, 5)) {
     return false;

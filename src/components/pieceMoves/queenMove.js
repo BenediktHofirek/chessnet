@@ -1,4 +1,4 @@
-import barrierCheck from "./barrierCheck";
+import barrierCheck from "./supportFunctions/barrierCheck";
 
 export default function queenMove(firstF, secondF, position) {
   return (

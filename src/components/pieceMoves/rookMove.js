@@ -1,4 +1,4 @@
-import barrierCheck from "./barrierCheck";
+import barrierCheck from "./supportFunctions/barrierCheck";
 
 export default function rookMove(firstF, secondF, position, castlingRights) {
   const result =

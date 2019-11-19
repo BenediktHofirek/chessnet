@@ -1,4 +1,4 @@
-export function pawnMove(firstF, secondF, position, sideToMove) {
+export default function pawnMove(firstF, secondF, position, sideToMove) {
   return (
     //move one step forward
     (Number(firstF.coordinate[1]) ===
@@ -25,27 +25,4 @@ export function pawnMove(firstF, secondF, position, sideToMove) {
           secondF.coordinate[0]) &&
       secondF.piece.includes(sideToMove === "white" ? "black" : "white"))
   );
-  //WIP take an passant
-}
-
-export function promotion(newPosition) {
-  //WIP promotion to other pieces
-  for (let x = 0; x < newPosition.length; x++) {
-    if (
-      Number(newPosition[x].coordinate[1]) === 1 &&
-      newPosition[x].piece === "blackPawn"
-    ) {
-      newPosition[x].piece = "blackQueen";
-    } else if (
-      Number(newPosition[x].coordinate[1]) === 8 &&
-      newPosition[x].piece === "whitePawn"
-    ) {
-      newPosition[x].piece = "whiteQueen";
-    }
-  }
-}
-
-export function anPassant() {
-  console.log(this);
-  return;
 }
