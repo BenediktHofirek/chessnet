@@ -1,23 +1,25 @@
 import React, { Component } from "react";
 import Notation from "./notation";
 import Chessboard from "./chessboard";
-import { pawnMove, promotion, anPassant } from "../pieceMoves/pawnMove";
+import { pawnMove, promotion } from "../pieceMoves/pawnMove";
 import rookMove from "../pieceMoves/rookMove";
 import bishopMove from "../pieceMoves/bishopMove";
 import knightMove from "../pieceMoves/knightMove";
 import { kingMove, castling } from "../pieceMoves/kingMove";
+import queenMove from "../pieceMoves/queenMove";
 
 export default class Game extends Component {
   constructor() {
     super();
     this.promotion = promotion.bind(this);
-    this.anPassant = anPassant.bind(this);
-    this.castling = castling.bind(this);
     this.state = {
       position: this.createStartingPosition("white"),
       playerColour: "",
       sideToMove: "white",
-      gameRecord: []
+      gameRecord: {
+        notation: [],
+        castling: ["a1", "h1", "a8", "h8"]
+      }
     };
   }
 
@@ -71,7 +73,8 @@ export default class Game extends Component {
   };
 
   handleFieldClick = (piece, index) => {
-    const { position, playerColour, sideToMove } = this.state;
+    const { position, playerColour, sideToMove, gameRecord } = this.state;
+    const castlingRights = [...gameRecord.castling];
     const firstClickedField = position.find(e => e.clicked);
 
     //if player did not clicked to any piece yet
@@ -114,7 +117,8 @@ export default class Game extends Component {
           moveAllowed = rookMove(
             firstClickedField,
             secondClickedField,
-            position
+            position,
+            castlingRights
           );
           break;
         case "Knight":
@@ -132,15 +136,18 @@ export default class Game extends Component {
           );
           break;
         case "Queen":
-          moveAllowed =
-            bishopMove(firstClickedField, secondClickedField, position) ||
-            rookMove(firstClickedField, secondClickedField, position);
+          moveAllowed = queenMove(
+            firstClickedField,
+            secondClickedField,
+            position
+          );
           break;
         case "King":
           moveAllowed = kingMove(
             firstClickedField,
             secondClickedField,
-            position
+            position,
+            castlingRights
           );
           break;
         case "Pawn":
@@ -156,15 +163,35 @@ export default class Game extends Component {
       }
 
       if (moveAllowed) {
-        newPosition[index].piece = firstClickedField.piece;
-        if (firstClickedField.piece.includes("Pawn")) {
-          this.promotion(newPosition);
-        }
-        newPosition[
-          newPosition.findIndex(
-            field => field.coordinate === firstClickedField.coordinate
+        console.log(
+          Math.abs(
+            firstClickedField.coordinate.charCodeAt(0) -
+              secondClickedField.coordinate.charCodeAt(0)
           )
-        ].piece = "";
+        );
+        //if the move is with the king and castling is allowed and was made, nothing else needs to be done
+        if (
+          firstClickedField.piece.includes("King") &&
+          (castlingRights.includes(`h${sideToMove === "white" ? 1 : 8}`) ||
+            castlingRights.includes(`a${sideToMove === "white" ? 1 : 8}`)) &&
+          Math.abs(
+            firstClickedField.coordinate.charCodeAt(0) -
+              secondClickedField.coordinate.charCodeAt(0)
+          ) === 2
+        ) {
+          castling(secondClickedField.coordinate, newPosition, castlingRights);
+        } else {
+          newPosition[index].piece = firstClickedField.piece;
+          if (firstClickedField.piece.includes("Pawn")) {
+            this.promotion(newPosition);
+          }
+          newPosition[
+            newPosition.findIndex(
+              field => field.coordinate === firstClickedField.coordinate
+            )
+          ].piece = "";
+        }
+        //reset clicked piece
         for (let x = 0; x < newPosition.length; x++) {
           newPosition[x].clicked = false;
         }
@@ -172,7 +199,11 @@ export default class Game extends Component {
         this.setState(state => {
           return {
             position: newPosition,
-            sideToMove: state.sideToMove === "white" ? "black" : "white"
+            sideToMove: state.sideToMove === "white" ? "black" : "white",
+            gameRecord: {
+              notation: state.gameRecord.notation,
+              castling: castlingRights
+            }
           };
         });
       }

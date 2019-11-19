@@ -43,6 +43,7 @@ const BoardField = ({ index, piece, handleFieldClick, clicked }) => {
         break;
     }
   };
+  
   const getColour = () => {
     if (Math.trunc(index / 8) % 2) {
       return index % 2 ? "white" : "black";
