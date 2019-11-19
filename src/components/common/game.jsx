@@ -16,10 +16,8 @@ export default class Game extends Component {
       position: this.createStartingPosition("white"),
       playerColour: "",
       sideToMove: "white",
-      gameRecord: {
-        notation: [],
-        castling: ["a1", "h1", "a8", "h8"]
-      }
+      gameRecord: [],
+      castlingRights: ["a1", "h1", "a8", "h8"]
     };
   }
 
@@ -73,8 +71,8 @@ export default class Game extends Component {
   };
 
   handleFieldClick = (piece, index) => {
-    const { position, playerColour, sideToMove, gameRecord } = this.state;
-    const castlingRights = [...gameRecord.castling];
+    const { position, playerColour, sideToMove, castlingRights } = this.state;
+    const castlingR = [...castlingRights];
     const firstClickedField = position.find(e => e.clicked);
 
     //if player did not clicked to any piece yet
@@ -91,7 +89,7 @@ export default class Game extends Component {
       }
       return;
     } else {
-      let moveAllowed = false;
+      let moveAllowed = false; //true, false, or in special case "castling" (which means true and make castle)
       const newPosition = [...position];
       const secondClickedField = position[index];
 
@@ -118,7 +116,7 @@ export default class Game extends Component {
             firstClickedField,
             secondClickedField,
             position,
-            castlingRights
+            castlingR
           );
           break;
         case "Knight":
@@ -147,7 +145,7 @@ export default class Game extends Component {
             firstClickedField,
             secondClickedField,
             position,
-            castlingRights
+            castlingR
           );
           break;
         case "Pawn":
@@ -167,19 +165,12 @@ export default class Game extends Component {
           Math.abs(
             firstClickedField.coordinate.charCodeAt(0) -
               secondClickedField.coordinate.charCodeAt(0)
-          )
+          ),
+          castlingR.includes(`h${sideToMove === "white" ? 1 : 8}`)
         );
         //if the move is with the king and castling is allowed and was made, nothing else needs to be done
-        if (
-          firstClickedField.piece.includes("King") &&
-          (castlingRights.includes(`h${sideToMove === "white" ? 1 : 8}`) ||
-            castlingRights.includes(`a${sideToMove === "white" ? 1 : 8}`)) &&
-          Math.abs(
-            firstClickedField.coordinate.charCodeAt(0) -
-              secondClickedField.coordinate.charCodeAt(0)
-          ) === 2
-        ) {
-          castling(secondClickedField.coordinate, newPosition, castlingRights);
+        if (moveAllowed === "castling") {
+          castling(secondClickedField.coordinate, newPosition, castlingR);
         } else {
           newPosition[index].piece = firstClickedField.piece;
           if (firstClickedField.piece.includes("Pawn")) {
@@ -200,10 +191,7 @@ export default class Game extends Component {
           return {
             position: newPosition,
             sideToMove: state.sideToMove === "white" ? "black" : "white",
-            gameRecord: {
-              notation: state.gameRecord.notation,
-              castling: castlingRights
-            }
+            castlingRights: castlingR
           };
         });
       }
