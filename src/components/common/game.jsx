@@ -1,11 +1,18 @@
 import React, { Component } from "react";
 import Notation from "./notation";
 import Chessboard from "./chessboard";
-import { breakStatement } from "@babel/types";
+import { pawnMove, promotion, anPassant } from "../pieceMoves/pawnMove";
+import rookMove from "../pieceMoves/rookMove";
+import bishopMove from "../pieceMoves/bishopMove";
+import knightMove from "../pieceMoves/knightMove";
+import { kingMove, castling } from "../pieceMoves/kingMove";
 
 export default class Game extends Component {
   constructor() {
     super();
+    this.promotion = promotion.bind(this);
+    this.anPassant = anPassant.bind(this);
+    this.castling = castling.bind(this);
     this.state = {
       position: this.createStartingPosition("white"),
       playerColour: "",
@@ -104,42 +111,40 @@ export default class Game extends Component {
       // 5 because "white" and also "black" have both length 5
       switch (firstClickedField.piece.substring(5)) {
         case "Rook":
-          moveAllowed = this.rookMove(
+          moveAllowed = rookMove(
             firstClickedField,
             secondClickedField,
             position
           );
           break;
         case "Knight":
-          moveAllowed = this.knightMove(
+          moveAllowed = knightMove(
             firstClickedField,
             secondClickedField,
             position
           );
           break;
         case "Bishop":
-          moveAllowed = this.bishopMove(
+          moveAllowed = bishopMove(
             firstClickedField,
             secondClickedField,
             position
           );
           break;
         case "Queen":
-          moveAllowed = this.queenMove(
-            firstClickedField,
-            secondClickedField,
-            position
-          );
+          moveAllowed =
+            bishopMove(firstClickedField, secondClickedField, position) ||
+            rookMove(firstClickedField, secondClickedField, position);
           break;
         case "King":
-          moveAllowed = this.kingMove(
+          moveAllowed = kingMove(
             firstClickedField,
             secondClickedField,
             position
           );
           break;
         case "Pawn":
-          moveAllowed = this.pawnMove(
+          moveAllowed = pawnMove(
             firstClickedField,
             secondClickedField,
             position,
@@ -172,69 +177,6 @@ export default class Game extends Component {
         });
       }
     }
-  };
-
-  rookMove = (firstF, secondF, position) => {
-    return;
-  };
-  knightMove = (firstF, secondF, position) => {
-    return;
-  };
-  bishopMove = (firstF, secondF, position) => {
-    return;
-  };
-  queenMove = (firstF, secondF, position) => {
-    return;
-  };
-  kingMove = (firstF, secondF, position) => {
-    return;
-  };
-  pawnMove = (firstF, secondF, position, sideToMove) => {
-    return (
-      //move one step forward
-      (Number(firstF.coordinate[1]) ===
-        +secondF.coordinate[1] + (sideToMove === "white" ? -1 : 1) &&
-        firstF.coordinate[0] === secondF.coordinate[0] &&
-        !secondF.piece) ||
-      //move two step forward from starting position
-      (Number(firstF.coordinate[1]) === (sideToMove === "white" ? 2 : 7) &&
-        Number(secondF.coordinate[1]) === (sideToMove === "white" ? 4 : 5) &&
-        firstF.coordinate[0] === secondF.coordinate[0] &&
-        !secondF.piece &&
-        !position.find(
-          f =>
-            f.coordinate ===
-            `${firstF.coordinate[0]}${+firstF.coordinate[1] +
-              (sideToMove === "white" ? 1 : -1)}`
-        ).piece) ||
-      //take piece
-      (Number(firstF.coordinate[1]) ===
-        +secondF.coordinate[1] + (sideToMove === "white" ? -1 : 1) &&
-        (String.fromCharCode(firstF.coordinate[0].charCodeAt(0) + 1) ===
-          secondF.coordinate[0] ||
-          String.fromCharCode(firstF.coordinate[0].charCodeAt(0) - 1) ===
-            secondF.coordinate[0]) &&
-        secondF.piece.includes(sideToMove === "white" ? "black" : "white"))
-    );
-    //WIP take an passant
-  };
-
-  promotion = newPosition => {
-    //WIP promotion to other pieces
-    for (let x = 0; x < newPosition.length; x++) {
-      if (
-        Number(newPosition[x].coordinate[1]) === 1 &&
-        newPosition[x].piece === "blackPawn"
-      ) {
-        newPosition[x].piece = "blackQueen";
-      } else if (
-        Number(newPosition[x].coordinate[1]) === 8 &&
-        newPosition[x].piece === "whitePawn"
-      ) {
-        newPosition[x].piece = "whiteQueen";
-      }
-    }
-    console.log(newPosition);
   };
 
   render() {
