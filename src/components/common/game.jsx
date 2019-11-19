@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import Notation from "./notation";
 import Chessboard from "./chessboard";
+import { breakStatement } from "@babel/types";
 
 export default class Game extends Component {
   constructor() {
     super();
     this.state = {
       position: this.createStartingPosition("white"),
-      playerColour: "white",
+      playerColour: "",
+      sideToMove: "white",
       gameRecord: []
     };
   }
@@ -54,29 +56,55 @@ export default class Game extends Component {
         });
       }
     }
+
+    if (playerColour === "white") {
+      startingPosition.reverse();
+    }
     return startingPosition;
   };
 
   handleFieldClick = (piece, index) => {
-    const { position, playerColour } = this.state;
+    const { position, playerColour, sideToMove } = this.state;
     const firstClickedField = position.find(e => e.clicked);
 
+    //if player did not clicked to any piece yet
     if (!firstClickedField) {
-      if (!playerColour || (piece && piece.includes(playerColour))) {
+      if (
+        (!playerColour || (piece && piece.includes(playerColour))) &&
+        piece.includes(sideToMove)
+      ) {
         const positionWithClick = position.map((field, i) => {
           field.clicked = index === i;
           return field;
         });
         this.setState({ position: positionWithClick });
       }
+      return;
     } else {
       let moveAllowed = false;
+      const newPosition = [...position];
       const secondClickedField = position[index];
-      console.log(firstClickedField.piece.substring(5));
+
+      //if player click to another own piece
+      if (
+        secondClickedField.piece.includes(sideToMove) &&
+        firstClickedField.piece.includes(sideToMove)
+      ) {
+        newPosition.forEach((field, index) => {
+          if (field.coordinate === secondClickedField.coordinate) {
+            newPosition[index].clicked = true;
+          } else if (field.clicked) {
+            newPosition[index].clicked = false;
+          }
+        });
+        this.setState({ position: newPosition });
+        return;
+      }
+
       // 5 because "white" and also "black" have both length 5
       switch (firstClickedField.piece.substring(5)) {
         case "Rook":
-          moveAllowed = rookMove(
+          moveAllowed = this.rookMove(
             firstClickedField,
             secondClickedField,
             position
@@ -114,21 +142,34 @@ export default class Game extends Component {
           moveAllowed = this.pawnMove(
             firstClickedField,
             secondClickedField,
-            position
+            position,
+            sideToMove
           );
+          break;
+        default:
           break;
       }
 
       if (moveAllowed) {
-        const newPosition = [...position];
-        newPosition[newPosition.findIndex(secondClickedField)].piece =
-          firstClickedField.piece;
-        newPosition[newPosition.findIndex(firstClickedField)].piece = "";
+        newPosition[index].piece = firstClickedField.piece;
+        if (firstClickedField.piece.includes("Pawn")) {
+          this.promotion(newPosition);
+        }
+        newPosition[
+          newPosition.findIndex(
+            field => field.coordinate === firstClickedField.coordinate
+          )
+        ].piece = "";
         for (let x = 0; x < newPosition.length; x++) {
           newPosition[x].clicked = false;
         }
 
-        this.setState({ position: newPosition });
+        this.setState(state => {
+          return {
+            position: newPosition,
+            sideToMove: state.sideToMove === "white" ? "black" : "white"
+          };
+        });
       }
     }
   };
@@ -148,8 +189,52 @@ export default class Game extends Component {
   kingMove = (firstF, secondF, position) => {
     return;
   };
-  pawnMove = (firstF, secondF, position) => {
-    return;
+  pawnMove = (firstF, secondF, position, sideToMove) => {
+    return (
+      //move one step forward
+      (Number(firstF.coordinate[1]) ===
+        +secondF.coordinate[1] + (sideToMove === "white" ? -1 : 1) &&
+        firstF.coordinate[0] === secondF.coordinate[0] &&
+        !secondF.piece) ||
+      //move two step forward from starting position
+      (Number(firstF.coordinate[1]) === (sideToMove === "white" ? 2 : 7) &&
+        Number(secondF.coordinate[1]) === (sideToMove === "white" ? 4 : 5) &&
+        firstF.coordinate[0] === secondF.coordinate[0] &&
+        !secondF.piece &&
+        !position.find(
+          f =>
+            f.coordinate ===
+            `${firstF.coordinate[0]}${+firstF.coordinate[1] +
+              (sideToMove === "white" ? 1 : -1)}`
+        ).piece) ||
+      //take piece
+      (Number(firstF.coordinate[1]) ===
+        +secondF.coordinate[1] + (sideToMove === "white" ? -1 : 1) &&
+        (String.fromCharCode(firstF.coordinate[0].charCodeAt(0) + 1) ===
+          secondF.coordinate[0] ||
+          String.fromCharCode(firstF.coordinate[0].charCodeAt(0) - 1) ===
+            secondF.coordinate[0]) &&
+        secondF.piece.includes(sideToMove === "white" ? "black" : "white"))
+    );
+    //WIP take an passant
+  };
+
+  promotion = newPosition => {
+    //WIP promotion to other pieces
+    for (let x = 0; x < newPosition.length; x++) {
+      if (
+        Number(newPosition[x].coordinate[1]) === 1 &&
+        newPosition[x].piece === "blackPawn"
+      ) {
+        newPosition[x].piece = "blackQueen";
+      } else if (
+        Number(newPosition[x].coordinate[1]) === 8 &&
+        newPosition[x].piece === "whitePawn"
+      ) {
+        newPosition[x].piece = "whiteQueen";
+      }
+    }
+    console.log(newPosition);
   };
 
   render() {

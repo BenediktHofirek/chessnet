@@ -39,6 +39,8 @@ const BoardField = ({ index, piece, handleFieldClick, clicked }) => {
         return whiteKing;
       case "whitePawn":
         return whitePawn;
+      default:
+        break;
     }
   };
   const getColour = () => {
@@ -54,7 +56,11 @@ const BoardField = ({ index, piece, handleFieldClick, clicked }) => {
       className={`board-row ${getColour()} ${clicked ? "clicked" : ""}`}
       onClick={() => handleFieldClick(piece, index)}
     >
-      <img src={selectPieceImage(piece)} style={{ width: 30, height: 30 }} />
+      <img
+        src={selectPieceImage(piece)}
+        alt={piece}
+        style={{ width: 30, height: 30 }}
+      />
     </td>
   );
 };
