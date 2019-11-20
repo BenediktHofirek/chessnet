@@ -133,8 +133,7 @@ export default class Game extends Component {
       firstClickedField,
       secondClickedField,
       position,
-      castlingR,
-      sideToMove
+      castlingR
     );
 
     if (
@@ -145,7 +144,7 @@ export default class Game extends Component {
         position,
         moveAllowed,
         sideToMove
-      ) 
+      )
     ) {
       return moveAllowed;
     }

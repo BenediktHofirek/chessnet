@@ -1,4 +1,5 @@
-export default function pawnMove(firstF, secondF, position, sideToMove) {
+export default function pawnMove(firstF, secondF, position) {
+  const sideToMove = firstF.piece.slice(0, 5);
   return (
     //move one step forward
     (Number(firstF.coordinate[1]) ===
