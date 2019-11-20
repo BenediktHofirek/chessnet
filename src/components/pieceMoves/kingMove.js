@@ -1,4 +1,4 @@
-import updateCastlingRights from './supportFunctions/updateCastlingRights';
+import updateCastlingRights from "./supportFunctions/updateCastlingRights";
 
 export default function kingMove(firstF, secondF, position, castlingRights) {
   //if there is figure of the same player on both
@@ -33,13 +33,9 @@ export default function kingMove(firstF, secondF, position, castlingRights) {
         1) ||
     checkCastling();
 
-  if (result && castlingRights.find(e => e[1] === kingRank)) {
+  if (result && castlingRights && castlingRights.find(e => e[1] === kingRank)) {
     updateCastlingRights(castlingRights, kingRank);
   }
 
   return result;
 }
-
-
-
-

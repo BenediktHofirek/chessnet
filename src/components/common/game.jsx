@@ -4,6 +4,9 @@ import Chessboard from "./chessboard";
 import castling from "../pieceMoves/supportFunctions/castling";
 import checkCheck from "../pieceMoves/supportFunctions/checkCheck";
 import checkMove from "../pieceMoves/supportFunctions/checkMove";
+import checkMate from "../pieceMoves/supportFunctions/checkMate";
+import checkDraw from "../pieceMoves/supportFunctions/checkDraw";
+import c from "../others/c";
 
 export default class Game extends Component {
   constructor() {
@@ -13,7 +16,9 @@ export default class Game extends Component {
       playerColour: "",
       sideToMove: "white",
       gameRecord: [],
-      castlingRights: ["a1", "h1", "a8", "h8"]
+      castlingRights: ["a1", "h1", "a8", "h8"],
+      mate: false,
+      draw: false
     };
   }
 
@@ -108,26 +113,10 @@ export default class Game extends Component {
   };
 
   handleMove = (firstClickedField, secondClickedField) => {
-    const { castlingRights } = this.state;
-    const castlingR = [...castlingRights];
-    const moveAllowed = this.allowMove(
-      firstClickedField,
-      secondClickedField,
-      castlingR
-    );
+    const { castlingRights, position, sideToMove } = this.state;
+    const castlingR = c(castlingRights);
+    let newPosition = c(position);
 
-    if (moveAllowed) {
-      this.makeMove(
-        firstClickedField,
-        secondClickedField,
-        castlingR,
-        moveAllowed
-      );
-    }
-  };
-
-  allowMove = (firstClickedField, secondClickedField, castlingR) => {
-    const { position, sideToMove } = this.state;
     //true, false, or in special case "castling" (which means true and make castle)
     const moveAllowed = checkMove(
       firstClickedField,
@@ -136,33 +125,53 @@ export default class Game extends Component {
       castlingR
     );
 
-    if (
-      moveAllowed &&
-      checkCheck(
-        firstClickedField,
-        secondClickedField,
-        position,
-        moveAllowed,
-        sideToMove
-      )
-    ) {
-      return moveAllowed;
+    if (!moveAllowed) {
+      return;
+    }
+    const moveIsWithoutCheck = this.makeMove(
+      firstClickedField,
+      secondClickedField,
+      newPosition,
+      moveAllowed,
+      castlingR,
+      sideToMove
+    );
+
+    if (!moveIsWithoutCheck) {
+      return;
+    } else {
+      //gameResult = mate, draw
+      //this function has still old value, so it must change them, because the position has changed
+      const gameResult = this.checkGameEnd(
+        [...newPosition],
+        sideToMove === "white" ? "black" : "white"
+      );
+
+      this.setState(state => {
+        return {
+          position: newPosition,
+          sideToMove: state.sideToMove === "white" ? "black" : "white",
+          castlingRights: castlingR,
+          mate: gameResult === "mate" ? true : false,
+          draw: gameResult === "draw" ? true : false
+        };
+      });
     }
   };
 
   makeMove = (
     firstClickedField,
     secondClickedField,
+    newPosition,
+    moveAllowed,
     castlingR,
-    moveAllowed
+    sideToMove
   ) => {
-    const { position } = this.state;
-    const newPosition = [...position];
     //if the move is with the king and castling is allowed and was made, nothing else needs to be done
     if (moveAllowed === "castling") {
       castling(secondClickedField.coordinate, newPosition, castlingR);
     } else {
-      const index = position.findIndex(
+      const index = newPosition.findIndex(
         e => e.coordinate === secondClickedField.coordinate
       );
       newPosition[index].piece = firstClickedField.piece;
@@ -175,18 +184,24 @@ export default class Game extends Component {
         )
       ].piece = "";
     }
+
+    const moveIsWithoutCheck = checkCheck(
+      firstClickedField,
+      secondClickedField,
+      newPosition,
+      moveAllowed,
+      sideToMove
+    );
+
+    if (!moveIsWithoutCheck) {
+      return false;
+    }
     //reset clicked piece
     for (let x = 0; x < newPosition.length; x++) {
       newPosition[x].clicked = false;
     }
 
-    this.setState(state => {
-      return {
-        position: newPosition,
-        sideToMove: state.sideToMove === "white" ? "black" : "white",
-        castlingRights: castlingR
-      };
-    });
+    return true;
   };
 
   promotion = newPosition => {
@@ -204,6 +219,18 @@ export default class Game extends Component {
         newPosition[x].piece = "whiteQueen";
       }
     }
+  };
+
+  checkGameEnd = (position, sideToMove) => {
+    const mate = checkMate(position, sideToMove);
+    if (mate) {
+      return "mate";
+    }
+    const draw = checkDraw();
+    if (draw) {
+      return "draw";
+    }
+    return false;
   };
 
   render() {
