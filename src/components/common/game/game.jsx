@@ -158,8 +158,6 @@ export default class Game extends Component {
     }
   };
 
-  
-
   render() {
     const { position, gameRecord } = this.state;
 
