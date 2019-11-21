@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import React, { Component } from "react";
 import whiteRook from "../others/boardPieces/whiteRook.png";
 import whiteKnight from "../others/boardPieces/whiteKnight.png";

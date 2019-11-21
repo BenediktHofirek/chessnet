@@ -1,6 +1,6 @@
-import checkCheckOnField from "./checkCheckOnField";
-import { moveFunctions } from "./moveFunctions";
-import getBetweenFields from "./getBetweenFields";
+import checkCheckOnField from "../supportFunctions/checkCheckOnField";
+import { moveFunctions } from "../supportFunctions/moveFunctions";
+import getBetweenFields from "../supportFunctions/getBetweenFields";
 
 export default function checkMate(position, sideToMove) {
   const matingSite = sideToMove === "white" ? "black" : "white";

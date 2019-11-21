@@ -10,7 +10,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "t": "jest",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -31,5 +31,14 @@
   "main": "index.js",
   "repository": "https://github.com/utility4u/chessnet.git",
   "author": "utility4u <benedikthofirek@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.7.2",
+    "@babel/preset-env": "^7.7.1",
+    "@babel/preset-react": "^7.7.0",
+    "babel-jest": "^24.9.0",
+    "babel-loader": "^8.0.6",
+    "jest": "^24.9.0",
+    "react-test-renderer": "^16.12.0"
+  }
 }

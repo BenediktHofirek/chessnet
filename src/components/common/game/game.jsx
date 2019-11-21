@@ -1,12 +1,11 @@
 import React, { Component } from "react";
-import Notation from "./notation";
-import Chessboard from "./chessboard";
-import castling from "../pieceMoves/supportFunctions/castling";
-import checkCheck from "../pieceMoves/supportFunctions/checkCheck";
-import checkMove from "../pieceMoves/supportFunctions/checkMove";
-import checkMate from "../pieceMoves/supportFunctions/checkMate";
-import checkDraw from "../pieceMoves/supportFunctions/checkDraw";
-import c from "../others/c";
+import Notation from "../notation";
+import Chessboard from "../chessboard";
+import castling from "./chessGameFunctions/supportFunctions/castling";
+import checkCheck from "./chessGameFunctions/supportFunctions/checkCheck";
+import checkMove from "./chessGameFunctions/supportFunctions/checkMove";
+import checkGameEnd from "./chessGameFunctions/gameEndFunctions/checkGameEnd";
+import c from "../../others/c";
 
 export default class Game extends Component {
   constructor() {
@@ -113,7 +112,7 @@ export default class Game extends Component {
   };
 
   handleMove = (firstClickedField, secondClickedField) => {
-    const { castlingRights, position, sideToMove } = this.state;
+    const { castlingRights, position, sideToMove, gameRecord } = this.state;
     const castlingR = c(castlingRights);
     let newPosition = c(position);
 
@@ -142,9 +141,10 @@ export default class Game extends Component {
     } else {
       //gameResult = mate, draw
       //this function has still old value, so it must change them, because the position has changed
-      const gameResult = this.checkGameEnd(
-        [...newPosition],
-        sideToMove === "white" ? "black" : "white"
+      const gameResult = checkGameEnd(
+        c(newPosition),
+        sideToMove === "white" ? "black" : "white",
+        gameRecord
       );
 
       this.setState(state => {
@@ -219,18 +219,6 @@ export default class Game extends Component {
         newPosition[x].piece = "whiteQueen";
       }
     }
-  };
-
-  checkGameEnd = (position, sideToMove) => {
-    const mate = checkMate(position, sideToMove);
-    if (mate) {
-      return "mate";
-    }
-    const draw = checkDraw();
-    if (draw) {
-      return "draw";
-    }
-    return false;
   };
 
   render() {
