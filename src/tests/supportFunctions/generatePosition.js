@@ -15,5 +15,5 @@ export default function generatePosition(pieces) {
     position[position.findIndex(f => f.coordinate === p[0])].piece = p[1];
   });
 
-  return pieces;
+  return position;
 }

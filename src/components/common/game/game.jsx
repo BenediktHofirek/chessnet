@@ -6,12 +6,18 @@ import checkCheck from "./chessGameFunctions/supportFunctions/checkCheck";
 import checkMove from "./chessGameFunctions/supportFunctions/checkMove";
 import checkGameEnd from "./chessGameFunctions/gameEndFunctions/checkGameEnd";
 import c from "../../others/c";
+import generatePosition from "../../../tests/supportFunctions/generatePosition";
 
 export default class Game extends Component {
   constructor() {
     super();
     this.state = {
-      position: this.createStartingPosition("white"),
+      position: generatePosition([
+        ["h1", "whiteKing"],
+        ["h8", "blackKing"],
+        ["a7", "blackBishop"],
+        ["a3", "whiteBishop"]
+      ]), //this.createStartingPosition("white"),
       playerColour: "",
       sideToMove: "white",
       gameRecord: [],

@@ -9,6 +9,7 @@ export default function checkDraw(position, sideToMove, gameRecord) {
   const figuresWithoutKings = position.filter(
     f => f.piece && f.piece.slice(5) !== "King"
   );
+
   if (
     figuresWithoutKings.length === 1 &&
     (figuresWithoutKings[0].piece.slice(5) === "Bishop" ||
@@ -16,27 +17,32 @@ export default function checkDraw(position, sideToMove, gameRecord) {
   ) {
     return true;
   }
-
+  
   //kings and same coloured bishops
   if (
     figuresWithoutKings.length === 2 &&
     figuresWithoutKings.some(p => p.piece === "whiteBishop") &&
     figuresWithoutKings.some(p => p.piece === "blackBishop") &&
-    Math.abs(
-      figuresWithoutKings[0].coordinate.charCodeAt(0) -
-        figuresWithoutKings[1].coordinate.charCodeAt(0)
-    ) -
+    !(
       Math.abs(
-        Number(figuresWithoutKings[0].coordinate[1]) -
-          Number(figuresWithoutKings[1].coordinate[1])
-      ) !==
-      0
+        Math.abs(
+          figuresWithoutKings[0].coordinate.charCodeAt(0) -
+            figuresWithoutKings[1].coordinate.charCodeAt(0)
+        ) -
+          Math.abs(
+            Number(figuresWithoutKings[0].coordinate[1]) -
+              Number(figuresWithoutKings[1].coordinate[1])
+          )
+      ) % 2
+    )
   ) {
     return true;
   }
 
   //stalemate
-  const allPiecesToMove = position.filter(p => p.piece.slice(5) === sideToMove);
+  const allPiecesToMove = position.filter(
+    p => p.piece.slice(0, 5) === sideToMove
+  );
   const isMovePossible = allPiecesToMove.some(p =>
     position
       .map(f => moveFunctions[p.piece.substring(5)](p, f, position))
@@ -47,6 +53,5 @@ export default function checkDraw(position, sideToMove, gameRecord) {
   }
 
   //TODO 50 moves rule
-
   return false;
 }
