@@ -8,8 +8,7 @@ export default function makeMove(
   newPosition,
   moveAllowed,
   castlingR,
-  sideToMove,
-  thisArgument
+  thisArgument = false
 ) {
   //if the move is with the king and castling is allowed and was made, nothing else needs to be done
   if (moveAllowed === "castling") {
@@ -20,10 +19,11 @@ export default function makeMove(
     );
     newPosition[index].piece = firstClickedField.piece;
     if (
-      (firstClickedField.piece === "whitePawn" &&
+      ((firstClickedField.piece === "whitePawn" &&
         firstClickedField.coordinate[1] === "7") ||
-      (firstClickedField.piece === "blackPawn" &&
-        firstClickedField.coordinate[1] === "2")
+        (firstClickedField.piece === "blackPawn" &&
+          firstClickedField.coordinate[1] === "2")) &&
+      thisArgument
     ) {
       promotion(newPosition, thisArgument);
     }
@@ -38,8 +38,7 @@ export default function makeMove(
     firstClickedField,
     secondClickedField,
     newPosition,
-    moveAllowed,
-    sideToMove
+    moveAllowed
   );
 
   if (!moveIsWithoutCheck) {

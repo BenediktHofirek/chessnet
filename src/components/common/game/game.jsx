@@ -132,7 +132,6 @@ export default class Game extends Component {
       newPosition,
       moveAllowed,
       castlingR,
-      sideToMove,
       this
     );
 

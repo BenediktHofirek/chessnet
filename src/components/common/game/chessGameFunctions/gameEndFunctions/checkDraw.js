@@ -47,11 +47,7 @@ export default function checkDraw(position, sideToMove, gameRecord) {
   );
   const isMovePossible = allPiecesToMove.some(p =>
     position
-      .map(
-        f =>
-          checkMove(p, f, position) &&
-          makeMove(p, f, c(position), true, [], sideToMove)
-      )
+      .map(f => checkMove(p, f, position) && makeMove(p, f, c(position)))
       .some(bolVal => bolVal)
   );
   if (!isMovePossible) {

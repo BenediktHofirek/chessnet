@@ -4,9 +4,9 @@ export default function checkCheck(
   firstF,
   secondF,
   position,
-  moveAllowed,
-  sideToMove
+  moveAllowed
 ) {
+  const sideToMove = firstF.piece.slice(0,5);
   if (moveAllowed === "castling") {
     switch (secondF.coordinate) {
       case "g1":
