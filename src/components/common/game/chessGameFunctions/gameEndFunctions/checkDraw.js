@@ -1,4 +1,6 @@
-import { moveFunctions } from "../supportFunctions/moveFunctions";
+import c from "../../../../others/c";
+import checkMove from "../supportFunctions/checkMove";
+import makeMove from "../supportFunctions/makeMove";
 
 export default function checkDraw(position, sideToMove, gameRecord) {
   //kings without pawns
@@ -17,7 +19,7 @@ export default function checkDraw(position, sideToMove, gameRecord) {
   ) {
     return true;
   }
-  
+
   //kings and same coloured bishops
   if (
     figuresWithoutKings.length === 2 &&
@@ -45,7 +47,11 @@ export default function checkDraw(position, sideToMove, gameRecord) {
   );
   const isMovePossible = allPiecesToMove.some(p =>
     position
-      .map(f => moveFunctions[p.piece.substring(5)](p, f, position))
+      .map(
+        f =>
+          checkMove(p, f, position) &&
+          makeMove(p, f, c(position), true, [], sideToMove)
+      )
       .some(bolVal => bolVal)
   );
   if (!isMovePossible) {

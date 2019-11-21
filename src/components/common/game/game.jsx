@@ -1,23 +1,16 @@
 import React, { Component } from "react";
 import Notation from "../notation";
 import Chessboard from "../chessboard";
-import castling from "./chessGameFunctions/supportFunctions/castling";
-import checkCheck from "./chessGameFunctions/supportFunctions/checkCheck";
 import checkMove from "./chessGameFunctions/supportFunctions/checkMove";
 import checkGameEnd from "./chessGameFunctions/gameEndFunctions/checkGameEnd";
+import makeMove from "./chessGameFunctions/supportFunctions/makeMove";
 import c from "../../others/c";
-import generatePosition from "../../../tests/supportFunctions/generatePosition";
 
 export default class Game extends Component {
   constructor() {
     super();
     this.state = {
-      position: generatePosition([
-        ["h1", "whiteKing"],
-        ["h8", "blackKing"],
-        ["a7", "blackBishop"],
-        ["a3", "whiteBishop"]
-      ]), //this.createStartingPosition("white"),
+      position: this.createStartingPosition("white"),
       playerColour: "",
       sideToMove: "white",
       gameRecord: [],
@@ -133,13 +126,14 @@ export default class Game extends Component {
     if (!moveAllowed) {
       return;
     }
-    const moveIsWithoutCheck = this.makeMove(
+    const moveIsWithoutCheck = makeMove(
       firstClickedField,
       secondClickedField,
       newPosition,
       moveAllowed,
       castlingR,
-      sideToMove
+      sideToMove,
+      this
     );
 
     if (!moveIsWithoutCheck) {
@@ -165,67 +159,7 @@ export default class Game extends Component {
     }
   };
 
-  makeMove = (
-    firstClickedField,
-    secondClickedField,
-    newPosition,
-    moveAllowed,
-    castlingR,
-    sideToMove
-  ) => {
-    //if the move is with the king and castling is allowed and was made, nothing else needs to be done
-    if (moveAllowed === "castling") {
-      castling(secondClickedField.coordinate, newPosition, castlingR);
-    } else {
-      const index = newPosition.findIndex(
-        e => e.coordinate === secondClickedField.coordinate
-      );
-      newPosition[index].piece = firstClickedField.piece;
-      if (firstClickedField.piece.includes("Pawn")) {
-        this.promotion(newPosition);
-      }
-      newPosition[
-        newPosition.findIndex(
-          field => field.coordinate === firstClickedField.coordinate
-        )
-      ].piece = "";
-    }
-
-    const moveIsWithoutCheck = checkCheck(
-      firstClickedField,
-      secondClickedField,
-      newPosition,
-      moveAllowed,
-      sideToMove
-    );
-
-    if (!moveIsWithoutCheck) {
-      return false;
-    }
-    //reset clicked piece
-    for (let x = 0; x < newPosition.length; x++) {
-      newPosition[x].clicked = false;
-    }
-
-    return true;
-  };
-
-  promotion = newPosition => {
-    //WIP promotion to other pieces
-    for (let x = 0; x < newPosition.length; x++) {
-      if (
-        Number(newPosition[x].coordinate[1]) === 1 &&
-        newPosition[x].piece === "blackPawn"
-      ) {
-        newPosition[x].piece = "blackQueen";
-      } else if (
-        Number(newPosition[x].coordinate[1]) === 8 &&
-        newPosition[x].piece === "whitePawn"
-      ) {
-        newPosition[x].piece = "whiteQueen";
-      }
-    }
-  };
+  
 
   render() {
     const { position, gameRecord } = this.state;

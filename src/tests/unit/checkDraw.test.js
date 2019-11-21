@@ -34,18 +34,4 @@ describe("CheckDraw function", () => {
       )
     ).toBe(true);
   });
-
-  test("Two kings and opposite coloured bishops", () => {
-    expect(
-      checkDraw(
-        generatePosition([
-          ["h1", "whiteKing"],
-          ["h8", "blackKing"],
-          ["a6", "blackBishop"],
-          ["a3", "whiteBishop"]
-        ]),
-        "white"
-      )
-    ).toBe(false);
-  });
 });
