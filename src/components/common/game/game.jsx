@@ -178,7 +178,7 @@ export default class Game extends Component {
     const { position, gameRecord } = this.state;
 
     return (
-      <div>
+      <div className={"game"}>
         <Chessboard
           position={position}
           handleFieldClick={this.handleFieldClick}

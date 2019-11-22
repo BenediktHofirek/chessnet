@@ -5,6 +5,11 @@
   padding: 0px;
 }
 
+.game {
+  width: 100%;
+  float: left;
+}
+
 .chessboard {
   float: left;
   margin-left: 50px;
@@ -23,22 +28,21 @@
 }
 
 .chessboard .board .board-row .board-field {
-  display: block;
   border: none;
-  width: 35px;
-  height: 35px;
+  position: relative;
+  width: 40px;
+  height: 40px;
 }
 
 .chessboard .board .board-row .board-field .piece {
-  display: block;
-  float: center;
-  margin: auto;
-  width: 28px;
-  height: 28px;
-}
-
-.chessboard .board .board-row .board-field .piece .clicked {
-  border: 2px solid red;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  width: 35px;
+  height: 35px;
 }
 
 .chessboard .board .board-row .white {
@@ -47,5 +51,20 @@
 
 .chessboard .board .board-row .black {
   background: #6d6d60;
+}
+
+.chessboard .board .board-row .clicked {
+  border: 2px solid yellowgreen;
+}
+
+.header {
+  margin: auto;
+  float: left;
+  width: 100%;
+}
+
+.header h1, .header h2 {
+  text-align: center;
+  margin: 2vh;
 }
 /*# sourceMappingURL=index.css.map */

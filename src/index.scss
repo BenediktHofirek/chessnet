@@ -4,6 +4,11 @@
   padding: 0px;
 }
 
+.game {
+  width: 100%;
+  float: left;
+}
+
 .chessboard {
   float: left;
   margin-left: 50px;
@@ -17,22 +22,20 @@
       display: flex;
 
       .board-field {
-        display: block;
         border: none;
-        position
-        width: 35px;
-        height: 35px;
+        position: relative;
+        width: 40px;
+        height: 40px;
 
         .piece {
-          display: block;
-          float: center;
-          margin: auto;
-          width: 28px;
-          height: 28px;
-
-          .clicked {
-            border: 2px solid red;
-          }
+          margin: 0;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+          width: 35px;
+          height: 35px;
         }
       }
 
@@ -42,6 +45,21 @@
       .black {
         background: rgb(109, 109, 96);
       }
+
+      .clicked {
+        border: 2px solid yellowgreen;
+      }
     }
+  }
+}
+
+.header {
+  margin: auto;
+  float: left;
+  width: 100%;
+
+  h1, h2 {
+    text-align: center;
+    margin: 2vh;
   }
 }
