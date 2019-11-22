@@ -1,10 +1,15 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class Navigation extends Component {
   state = {};
   render() {
-    return <div></div>;
+    return (
+      <div>
+        <Link to="/home">Home</Link>
+        <Link to="/play">Play</Link>
+      </div>
+    );
   }
 }
 
