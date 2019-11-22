@@ -7,47 +7,53 @@
 .game {
   width: 100%;
   float: left;
-}
 
-.chessboard {
-  float: left;
-  margin-left: 50px;
-
-  .board {
+  .notation {
+    width: 50%;
     float: left;
-    margin: auto;
-    border: 5px solid black;
+  }
 
-    .board-row {
-      display: flex;
+  .chessboard {
+    width: 50%;
+    float: left;
+    padding-left: 5vw;
 
-      .board-field {
-        border: none;
-        position: relative;
-        width: 40px;
-        height: 40px;
+    .board {
+      float: left;
+      margin: auto;
+      border: 5px solid black;
 
-        .piece {
-          margin: 0;
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          -ms-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-          width: 35px;
-          height: 35px;
+      .board-row {
+        display: flex;
+
+        .board-field {
+          border: none;
+          position: relative;
+          width: 40px;
+          height: 40px;
+
+          .piece {
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            width: 35px;
+            height: 35px;
+          }
         }
-      }
 
-      .white {
-        background: rgb(224, 224, 153);
-      }
-      .black {
-        background: rgb(109, 109, 96);
-      }
+        .white {
+          background: rgb(224, 224, 153);
+        }
+        .black {
+          background: rgb(109, 109, 96);
+        }
 
-      .clicked {
-        border: 2px solid yellowgreen;
+        .clicked {
+          border: 2px solid yellowgreen;
+        }
       }
     }
   }
@@ -58,7 +64,8 @@
   float: left;
   width: 100%;
 
-  h1, h2 {
+  h1,
+  h2 {
     text-align: center;
     margin: 2vh;
   }

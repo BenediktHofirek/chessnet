@@ -10,31 +10,37 @@
   float: left;
 }
 
-.chessboard {
+.game .notation {
+  width: 50%;
   float: left;
-  margin-left: 50px;
 }
 
-.chessboard .board {
+.game .chessboard {
+  width: 50%;
+  float: left;
+  padding-left: 5vw;
+}
+
+.game .chessboard .board {
   float: left;
   margin: auto;
   border: 5px solid black;
 }
 
-.chessboard .board .board-row {
+.game .chessboard .board .board-row {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
-.chessboard .board .board-row .board-field {
+.game .chessboard .board .board-row .board-field {
   border: none;
   position: relative;
   width: 40px;
   height: 40px;
 }
 
-.chessboard .board .board-row .board-field .piece {
+.game .chessboard .board .board-row .board-field .piece {
   margin: 0;
   position: absolute;
   top: 50%;
@@ -45,15 +51,15 @@
   height: 35px;
 }
 
-.chessboard .board .board-row .white {
+.game .chessboard .board .board-row .white {
   background: #e0e099;
 }
 
-.chessboard .board .board-row .black {
+.game .chessboard .board .board-row .black {
   background: #6d6d60;
 }
 
-.chessboard .board .board-row .clicked {
+.game .chessboard .board .board-row .clicked {
   border: 2px solid yellowgreen;
 }
 
@@ -63,7 +69,8 @@
   width: 100%;
 }
 
-.header h1, .header h2 {
+.header h1,
+.header h2 {
   text-align: center;
   margin: 2vh;
 }

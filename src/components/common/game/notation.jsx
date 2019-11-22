@@ -2,7 +2,7 @@ import React from "react";
 
 const Notation = ({ gameRecord }) => {
   return (
-    <div>
+    <div className={"notation"}>
       <table>
         <thead>
           <tr>
