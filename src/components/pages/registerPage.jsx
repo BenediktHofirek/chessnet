@@ -2,15 +2,15 @@ import React, { Component } from "react";
 import Header from "../common/header";
 import { Link } from "react-router-dom";
 
-class LoginPage extends Component {
+class RegisterPage extends Component {
   render() {
     return (
       <div>
         <Header />
-        <Link to="/register">Register</Link>
+        <Link to="/login">Login</Link>
       </div>
     );
   }
 }
 
-export default LoginPage;
+export default RegisterPage;

@@ -8,7 +8,8 @@ function App() {
   return (
     <Router>
       <Switch>
-      <Route path="/login" children={<LoginPage />} />
+        <Route path="/login" children={<LoginPage />} />
+        <Route path="/register" children={<RegisterPage />} />
         <PrivateRoute path="/" children={<MainPage />} />
       </Switch>
     </Router>
