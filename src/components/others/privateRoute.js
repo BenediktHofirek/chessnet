@@ -6,7 +6,7 @@ export default function PrivateRoute({ children, ...rest }) {
     <Route
       {...rest}
       render={({ location }) =>
-        true ? (
+        false ? (
           children
         ) : (
           <Redirect

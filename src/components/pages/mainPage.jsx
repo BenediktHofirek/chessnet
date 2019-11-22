@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import NotFoundPage from "./notFoundPage";
 import Header from "../common/header";
 import Navigation from "../../components/common/navigation";
@@ -11,7 +11,6 @@ export default class MainPage extends Component {
       <div>
         <Header />
         <Navigation />
-        <Router>
           <Switch>
             <Route exact path="/">
               <Redirect to="/home" />
@@ -26,7 +25,6 @@ export default class MainPage extends Component {
               <NotFoundPage />
             </Route>
           </Switch>
-        </Router>
       </div>
     );
   }
