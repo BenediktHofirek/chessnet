@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import Notation from "../notation";
-import Chessboard from "../chessboard";
+import Notation from "./notation";
+import Chessboard from "./chessboard";
 import checkMove from "./chessGameFunctions/supportFunctions/checkMove";
 import checkGameEnd from "./chessGameFunctions/gameEndFunctions/checkGameEnd";
 import makeMove from "./chessGameFunctions/supportFunctions/makeMove";

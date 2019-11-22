@@ -13,7 +13,7 @@ const Chessboard = ({ position, handleFieldClick }) => {
   ));
 
   return (
-    <table id="chessboard">
+    <table className="chessboard">
       <tbody className="board">
         {Array.apply(null, Array(8)).map((value, index) => (
           <tr key={index} className="board-row">

@@ -4,14 +4,12 @@
   padding: 0px;
 }
 
-#chessboard {
-  display: flex;
-  margin: auto;
+.chessboard {
+  float: left;
+  margin-left: 50px;
 
   .board {
-    display: flex;
     margin: auto;
-    flex-direction: column;
     border: 5px solid black;
 
     .board-row {
