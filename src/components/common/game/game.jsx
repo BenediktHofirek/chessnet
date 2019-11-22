@@ -113,7 +113,8 @@ export default class Game extends Component {
   handleMove = (firstClickedField, secondClickedField) => {
     const { castlingRights, position, sideToMove, gameRecord } = this.state;
     const castlingR = c(castlingRights);
-    let newPosition = c(position);
+    const newPosition = c(position);
+    const updatedGameRecord = c(gameRecord);
 
     //true, false, or in special case "castling" (which means true and make castle)
     const moveAllowed = checkMove(
@@ -140,13 +141,13 @@ export default class Game extends Component {
     } else {
       //gameResult = mate, draw
       //this function has still old value, so it must change them, because the position has changed
+      moveRecord(firstClickedField, secondClickedField, newPosition, updatedGameRecord);
+
       const gameResult = checkGameEnd(
         c(newPosition),
         sideToMove === "white" ? "black" : "white",
-        gameRecord
+        updatedGameRecord
       );
-
-      const moveRecord = moveRecord(firstClickedField, secondClickedField);
 
       this.setState(state => {
         return {
@@ -154,7 +155,8 @@ export default class Game extends Component {
           sideToMove: state.sideToMove === "white" ? "black" : "white",
           castlingRights: castlingR,
           mate: gameResult === "mate" ? true : false,
-          draw: gameResult === "draw" ? true : false
+          draw: gameResult === "draw" ? true : false,
+          gameRecord: updatedGameRecord
         };
       });
     }
