@@ -10,7 +10,7 @@ function App() {
           <PlayPage/>
         </Route>
         <Route path="/">
-          <PlayPage/>
+          <MainPage/>
         </Route>
       </Switch>
     </Router>
