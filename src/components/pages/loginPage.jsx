@@ -13,6 +13,7 @@ class LoginPage extends Component {
 
   handleSubmit(event){
     event.preventDefault();
+    fetch()
   }
 
   render() {
