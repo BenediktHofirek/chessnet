@@ -1,5 +1,4 @@
-// eslint-disable-next-line
-import React, { Component } from "react";
+import React from "react";
 import whiteRook from "../others/boardPieces/whiteRook.png";
 import whiteKnight from "../others/boardPieces/whiteKnight.png";
 import whiteBishop from "../others/boardPieces/whiteBishop.png";
@@ -44,7 +43,7 @@ const BoardField = ({ index, piece, handleFieldClick, clicked }) => {
         break;
     }
   };
-  
+
   const getColour = () => {
     if (Math.trunc(index / 8) % 2) {
       return index % 2 ? "white" : "black";

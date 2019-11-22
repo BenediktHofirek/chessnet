@@ -1,5 +1,4 @@
-// eslint-disable-next-line
-import React, { Component } from "react";
+import React from "react";
 import BoardField from "./boardField";
 
 const Chessboard = ({ position, handleFieldClick }) => {
