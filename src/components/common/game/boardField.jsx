@@ -38,16 +38,10 @@ const BoardField = ({ index, piece, handleFieldClick, clicked }) => {
 
   return (
     <td
-      className={`board-row ${getColour()} ${clicked ? "clicked" : ""}`}
+      className={`board-field ${getColour()} ${clicked ? "clicked" : ""}`}
       onClick={() => handleFieldClick(piece, index)}
     >
-      {pieceImage[piece] && (
-        <img
-          src={pieceImage[piece]}
-          alt={piece}
-          style={{ width: 30, height: 30 }}
-        />
-      )}
+      {pieceImage[piece] && <img src={pieceImage[piece]} alt={piece} className={"piece"} />}
     </td>
   );
 };

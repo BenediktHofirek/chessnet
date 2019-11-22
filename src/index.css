@@ -17,16 +17,28 @@
 }
 
 .chessboard .board .board-row {
-  float: center;
-  margin: auto;
-  border: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .chessboard .board .board-row .board-field {
   display: block;
-  border: 20px solid black;
-  width: 80px;
-  height: 80px;
+  border: none;
+  width: 35px;
+  height: 35px;
+}
+
+.chessboard .board .board-row .board-field .piece {
+  display: block;
+  float: center;
+  margin: auto;
+  width: 28px;
+  height: 28px;
+}
+
+.chessboard .board .board-row .board-field .piece .clicked {
+  border: 2px solid red;
 }
 
 .chessboard .board .board-row .white {
@@ -35,9 +47,5 @@
 
 .chessboard .board .board-row .black {
   background: #6d6d60;
-}
-
-.chessboard .board .board-row .clicked {
-  border: 2px solid red;
 }
 /*# sourceMappingURL=index.css.map */

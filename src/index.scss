@@ -14,24 +14,33 @@
     border: 5px solid black;
 
     .board-row {
-      float: center;
-      margin: auto;
-      border: none;
+      display: flex;
 
       .board-field {
         display: block;
-        border: 20px solid black;
-        width: 80px;
-        height: 80px;
+        border: none;
+        position
+        width: 35px;
+        height: 35px;
+
+        .piece {
+          display: block;
+          float: center;
+          margin: auto;
+          width: 28px;
+          height: 28px;
+
+          .clicked {
+            border: 2px solid red;
+          }
+        }
       }
+
       .white {
         background: rgb(224, 224, 153);
       }
       .black {
         background: rgb(109, 109, 96);
-      }
-      .clicked {
-        border: 2px solid red;
       }
     }
   }
