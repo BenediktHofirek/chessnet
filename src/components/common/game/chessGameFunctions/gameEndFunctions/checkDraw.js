@@ -54,6 +54,8 @@ export default function checkDraw(position, sideToMove, gameRecord) {
     return true;
   }
 
+  //treefold repetition
+
   //TODO 50 moves rule
   return false;
 }

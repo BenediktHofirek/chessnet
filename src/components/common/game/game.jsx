@@ -5,7 +5,7 @@ import checkMove from "./chessGameFunctions/supportFunctions/checkMove";
 import checkGameEnd from "./chessGameFunctions/gameEndFunctions/checkGameEnd";
 import makeMove from "./chessGameFunctions/supportFunctions/makeMove";
 import c from "../../others/c";
-//git add . && git commit -m "" && git push origin master
+
 export default class Game extends Component {
   constructor() {
     super();
@@ -145,6 +145,8 @@ export default class Game extends Component {
         sideToMove === "white" ? "black" : "white",
         gameRecord
       );
+
+      const moveRecord = moveRecord(firstClickedField, secondClickedField);
 
       this.setState(state => {
         return {
