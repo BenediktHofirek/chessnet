@@ -7,12 +7,7 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/play">
-          <PlayPage/>
-        </Route>
-        <Route path="/">
-          <MainPage/>
-        </Route>
+        <Route path="/play" component>
       </Switch>
     </Router>
   );
