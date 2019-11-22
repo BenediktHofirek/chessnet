@@ -9,16 +9,18 @@
   margin-left: 50px;
 
   .board {
+    float: left;
     margin: auto;
     border: 5px solid black;
 
     .board-row {
-      display: flex;
-      flex-direction: row;
+      float: center;
+      margin: auto;
+      border: none;
 
       .board-field {
         display: block;
-        border: 2px solid black;
+        border: 20px solid black;
         width: 80px;
         height: 80px;
       }

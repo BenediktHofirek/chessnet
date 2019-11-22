@@ -11,23 +11,20 @@
 }
 
 .chessboard .board {
+  float: left;
   margin: auto;
   border: 5px solid black;
 }
 
 .chessboard .board .board-row {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
+  float: center;
+  margin: auto;
+  border: none;
 }
 
 .chessboard .board .board-row .board-field {
   display: block;
-  border: 2px solid black;
+  border: 20px solid black;
   width: 80px;
   height: 80px;
 }

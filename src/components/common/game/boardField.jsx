@@ -13,35 +13,19 @@ import blackKing from "../../others/boardPieces/blackKing.png";
 import blackPawn from "../../others/boardPieces/blackPawn.png";
 
 const BoardField = ({ index, piece, handleFieldClick, clicked }) => {
-  const selectPieceImage = () => {
-    switch (piece) {
-      case "blackRook":
-        return blackRook;
-      case "blackKnight":
-        return blackKnight;
-      case "blackBishop":
-        return blackBishop;
-      case "blackQueen":
-        return blackQueen;
-      case "blackKing":
-        return blackKing;
-      case "blackPawn":
-        return blackPawn;
-      case "whiteRook":
-        return whiteRook;
-      case "whiteKnight":
-        return whiteKnight;
-      case "whiteBishop":
-        return whiteBishop;
-      case "whiteQueen":
-        return whiteQueen;
-      case "whiteKing":
-        return whiteKing;
-      case "whitePawn":
-        return whitePawn;
-      default:
-        break;
-    }
+  const pieceImage = {
+    blackRook: blackRook,
+    blackPawn: blackPawn,
+    blackKnight: blackKnight,
+    blackBishop: blackBishop,
+    blackKing: blackKing,
+    blackQueen: blackQueen,
+    whiteRook: whiteRook,
+    whitePawn: whitePawn,
+    whiteKnight: whiteKnight,
+    whiteBishop: whiteBishop,
+    whiteKing: whiteKing,
+    whiteQueen: whiteQueen
   };
 
   const getColour = () => {
@@ -57,11 +41,13 @@ const BoardField = ({ index, piece, handleFieldClick, clicked }) => {
       className={`board-row ${getColour()} ${clicked ? "clicked" : ""}`}
       onClick={() => handleFieldClick(piece, index)}
     >
-      <img
-        src={selectPieceImage(piece)}
-        alt={piece}
-        style={{ width: 30, height: 30 }}
-      />
+      {pieceImage[piece] && (
+        <img
+          src={pieceImage[piece]}
+          alt={piece}
+          style={{ width: 30, height: 30 }}
+        />
+      )}
     </td>
   );
 };
