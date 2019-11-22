@@ -11,20 +11,20 @@ export default class MainPage extends Component {
       <div>
         <Header />
         <Navigation />
-          <Switch>
-            <Route exact path="/">
-              <Redirect to="/home" />
-            </Route>
-            <Route path="/home">
-              <HomeTab />
-            </Route>
-            <Route path="/play">
-              <PlayTab />
-            </Route>
-            <Route path="*">
-              <NotFoundPage />
-            </Route>
-          </Switch>
+        <Switch>
+          <Route exact path="/">
+            <Redirect to="/home" />
+          </Route>
+          <Route path="/home">
+            <HomeTab />
+          </Route>
+          <Route path="/play">
+            <PlayTab />
+          </Route>
+          <Route path="*">
+            <NotFoundPage />
+          </Route>
+        </Switch>
       </div>
     );
   }
