@@ -4,6 +4,7 @@ import Chessboard from "../chessboard";
 import checkMove from "./chessGameFunctions/supportFunctions/checkMove";
 import checkGameEnd from "./chessGameFunctions/gameEndFunctions/checkGameEnd";
 import makeMove from "./chessGameFunctions/supportFunctions/makeMove";
+import moveRecord from './chessGameFunctions/supportFunctions/moveRecord';
 import c from "../../others/c";
 
 export default class Game extends Component {
