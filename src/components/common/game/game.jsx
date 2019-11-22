@@ -4,7 +4,7 @@ import Chessboard from "../chessboard";
 import checkMove from "./chessGameFunctions/supportFunctions/checkMove";
 import checkGameEnd from "./chessGameFunctions/gameEndFunctions/checkGameEnd";
 import makeMove from "./chessGameFunctions/supportFunctions/makeMove";
-import moveRecord from './chessGameFunctions/supportFunctions/moveRecord';
+import moveRecord from "./chessGameFunctions/supportFunctions/moveRecord";
 import c from "../../others/c";
 
 export default class Game extends Component {
@@ -142,13 +142,24 @@ export default class Game extends Component {
     } else {
       //gameResult = mate, draw
       //this function has still old value, so it must change them, because the position has changed
-      moveRecord(firstClickedField, secondClickedField, newPosition, updatedGameRecord);
+      moveRecord(
+        firstClickedField,
+        secondClickedField,
+        newPosition,
+        updatedGameRecord
+      );
 
       const gameResult = checkGameEnd(
         c(newPosition),
         sideToMove === "white" ? "black" : "white",
         updatedGameRecord
       );
+      //indicate mate in notation
+      if (gameResult === "mate") {
+        updatedGameRecord[updatedGameRecord.length - 1] = `${
+          updatedGameRecord[updatedGameRecord.length - 1]
+        }#`;
+      }
 
       this.setState(state => {
         return {

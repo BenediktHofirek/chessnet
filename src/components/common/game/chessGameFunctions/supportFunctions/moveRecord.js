@@ -1,8 +1,12 @@
 export default function moveRecord(firstF, secondF, position, gameRecord) {
   const piece = firstF.piece.slice(5) === "Pawn" ? "" : firstF.piece.slice(5);
+
+  const middlePart = secondF.piece ? "x" : "";
+
   let firstPart = "";
   switch (piece) {
     case "":
+      firstPart = middlePart === "x" ? firstF.coordinate[0] : "";
       break;
     case "Knight":
       firstPart = "N";
@@ -11,7 +15,6 @@ export default function moveRecord(firstF, secondF, position, gameRecord) {
       firstPart = piece[0].toUpperCase();
   }
 
-  const middlePart = secondF.piece ? "x" : "";
   const endPart = secondF.coordinate;
 
   if (
