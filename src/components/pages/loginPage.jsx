@@ -22,7 +22,7 @@ class LoginPage extends Component {
   async handleSubmit(event) {
     event.preventDefault();
     const response = await fetch("http://127.0.0.1", {
-      
+      mode: 'no-cors'
     });
     console.log(response.status);
   }
