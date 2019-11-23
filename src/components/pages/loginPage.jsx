@@ -22,10 +22,7 @@ class LoginPage extends Component {
   async handleSubmit(event) {
     event.preventDefault();
     const response = await fetch("http://127.0.0.1", {
-      method: 'GET',
-     headers: {
-      'Access-Control-Allow-Origin': 'http://127.0.0.1'
-     }
+      method: 'GET'
     });
     console.log(response.status);
   }
