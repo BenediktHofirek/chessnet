@@ -20,11 +20,11 @@ class LoginPage extends Component {
   }
 
   async handleSubmit(event) {
+    const {username, password} = this.state;
     event.preventDefault();
-    const response = await fetch("http://127.0.0.1/index.php", {
+    const response = await fetch(`http://127.0.0.1/service/login?username=${username}&password=${password}`, {
       method: 'POST'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
     });
-    console.log(response);
   }
 
   render() {
