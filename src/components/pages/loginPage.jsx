@@ -3,17 +3,20 @@ import Header from "../common/header";
 import { Link } from "react-router-dom";
 
 class LoginPage extends Component {
-  
-  
+  c;
+
   handleChange(event) {
     const name = event.name;
     const value = event.target.value;
     this.setState({ [name]: value });
   }
 
-  handleSubmit(event){
+  async handleSubmit(event) {
     event.preventDefault();
-    fetch()
+    const response = await fetch("example.com", {
+      creditials: "same-origin"
+    });
+    console.log(response.status);
   }
 
   render() {
