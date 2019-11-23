@@ -3,7 +3,13 @@ import Header from "../common/header";
 import { Link } from "react-router-dom";
 
 class LoginPage extends Component {
-  c;
+  constructor() {
+    super();
+    this.state = {
+      username: "",
+      password: ""
+    };
+  }
 
   handleChange(event) {
     const name = event.name;
@@ -13,9 +19,7 @@ class LoginPage extends Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    const response = await fetch("example.com", {
-      creditials: "same-origin"
-    });
+    const response = await fetch("127.0.0.1");
     console.log(response.status);
   }
 
