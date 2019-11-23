@@ -29,6 +29,7 @@ class RegisterPage extends Component {
         method: "POST"
       }
     );
+    console.log(response);
   }
 
   render() {
