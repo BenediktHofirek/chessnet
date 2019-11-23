@@ -21,10 +21,10 @@ class LoginPage extends Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    const response = await fetch("http://127.0.0.1", {
-      method: 'GET'
+    const response = await fetch("http://127.0.0.1/index.php", {
+      method: 'POST'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
     });
-    console.log(response.status);
+    console.log(response);
   }
 
   render() {
