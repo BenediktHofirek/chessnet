@@ -21,7 +21,7 @@ class LoginPage extends Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    const response = await fetch("127.0.0.1");
+    const response = await fetch("http://127.0.0.1");
     console.log(response.status);
   }
 
