@@ -24,12 +24,18 @@ class RegisterPage extends Component {
     const { username, password, email } = this.state;
     event.preventDefault();
     const response = await fetch(
-      `http://127.0.0.1/service/register?username=${username}&password=${password}&email=${email}`,
+      // `http://127.0.0.1/service/register`,
+      'http://localhost:8080?parameters=register',
       {
-        method: "POST"
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: `username=${username}&password=${password}&email=${email}`
       }
     );
-    console.log(response);
+    const responseBody = await response.text();
+    console.log(responseBody);
   }
 
   render() {
