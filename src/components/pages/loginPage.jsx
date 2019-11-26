@@ -37,9 +37,9 @@ class LoginPage extends Component {
     );
     const responseBody = await response.text();
       console.log(responseBody);
-    // if (`${response.status}`[0] === "2") {
-    //   login();
-    // }
+    if (`${response.status}`[0] === "2") {
+      login();
+    }
   }
 
   render() {
