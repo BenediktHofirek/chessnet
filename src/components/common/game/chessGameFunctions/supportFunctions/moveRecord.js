@@ -45,7 +45,10 @@ export default function moveRecord(firstF, secondF, position, gameRecord) {
     gameRecord.push(`${firstPart}${middlePart}${endPart}=${newPiece}`);
   } else if (
     piece === "King" &&
-    Math.abs(+firstF.coordinate[1] - Number(secondF.piece.coordinate[1])) === 2
+    Math.abs(
+      +firstF.coordinate.charCodeAt(0) -
+        Number(secondF.coordinate.charCodeAt(0))
+    ) === 2
   ) {
     gameRecord.push(secondF.coordinate[0] === "c" ? "O-O-O" : "O-O");
   } else {

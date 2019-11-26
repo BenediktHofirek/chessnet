@@ -25,7 +25,7 @@ class LoginPage extends Component {
     event.preventDefault();
     const response = await fetch(
       // `http://127.0.0.1/service/register`,
-      "http://localhost:8080?parameters=register",
+      "http://localhost:8080?parameters=login",
       {
         method: "POST",
         headers: {
@@ -35,10 +35,10 @@ class LoginPage extends Component {
       }
     );
     const responseBody = await response.text();
-    console.log(responseBody);
-    if (response.status[0] === "2") {
-      login();
-    }
+      console.log(response, responseBody);
+    // if (`${response.status}`[0] === "2") {
+    //   login();
+    // }
   }
 
   render() {

@@ -13,7 +13,7 @@ const Notation = ({ gameRecord }) => {
         <tbody>
           {Array.apply(null, Array(Math.ceil(gameRecord.length / 2))).map(
             (e, i) => (
-              <tr>
+              <tr key={i}>
                 <td>{gameRecord[i * 2]}</td>
                 <td>{gameRecord[i * 2 + 1]}</td>
               </tr>

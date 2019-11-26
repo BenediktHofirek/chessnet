@@ -37,7 +37,7 @@ class RegisterPage extends Component {
     );
     const responseBody = await response.text();
     console.log(responseBody);
-    if (response.status[0] === "2") {
+    if (`${response.status}`[0] === "2") {
       login();
     }
   }

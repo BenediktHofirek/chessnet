@@ -4,7 +4,6 @@ import checkLogin from "./checkLogin";
 
 export default function PublicRoute({ children, ...rest }) {
   const loggedIn = checkLogin();
-  console.log('public');
   return (
     <Route
       {...rest}
