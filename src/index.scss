@@ -70,3 +70,27 @@
     margin: 2vh;
   }
 }
+
+.outer-div {
+  width: 100%;
+
+  form {
+    margin: auto;
+    width: 20vw;
+    display: flex;
+    flex-direction: column;
+
+    .item {
+      width: 100%;
+      min-height: 2vh;
+      label {
+        float: left;
+      }
+
+      input {
+        float: left;
+        width: 10vw;
+      }
+    }
+  }
+}

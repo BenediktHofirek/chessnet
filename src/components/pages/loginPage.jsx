@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Header from "../common/header";
 import { Link } from "react-router-dom";
+import login from "../others/login";
 
 class LoginPage extends Component {
   constructor() {
@@ -20,14 +21,21 @@ class LoginPage extends Component {
   }
 
   async handleSubmit(event) {
-    const {username, password} = this.state;
+    const { username, password } = this.state;
     event.preventDefault();
-    const response = await fetch(`http://127.0.0.1/service/login?username=${username}&password=${password}`, {
-      method: 'POST'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
-    });
+    const response = await fetch(
+      `http://127.0.0.1/service/login?username=${username}&password=${password}`,
+      {
+        method: "POST"
+      }
+    );
+    if (response.status[0] === "2") {
+      login();
+    }
   }
 
   render() {
+    login();
     return (
       <div>
         <Header />

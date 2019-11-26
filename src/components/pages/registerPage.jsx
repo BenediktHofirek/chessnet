@@ -25,11 +25,11 @@ class RegisterPage extends Component {
     event.preventDefault();
     const response = await fetch(
       // `http://127.0.0.1/service/register`,
-      'http://localhost:8080?parameters=register',
+      "http://localhost:8080?parameters=register",
       {
         method: "POST",
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
+          "Content-Type": "application/x-www-form-urlencoded"
         },
         body: `username=${username}&password=${password}&email=${email}`
       }
@@ -41,36 +41,36 @@ class RegisterPage extends Component {
   render() {
     const { username, password, email } = this.state;
     return (
-      <div>
+      <div className="outer-div">
         <Header />
         <form onSubmit={this.handleSubmit}>
-          <label>
-            Username:
+          <div className="item">
+            <label>Username:</label>
             <input
               name="username"
               type="text"
               value={username}
               onChange={this.handleChange}
             />
-          </label>
-          <label>
-            Password:
+          </div>
+          <div className="item">
+            <label>Password:</label>
             <input
               name="password"
               type="password"
               value={password}
               onChange={this.handleChange}
             />
-          </label>
-          <label>
-            Email:
+          </div>
+          <div className="item">
+            <label>Email:</label>
             <input
               name="email"
               type="email"
               value={email}
               onChange={this.handleChange}
             />
-          </label>
+          </div>
           <input type="submit" value="Submit" />
         </form>
         <h3>Already registered?</h3>
