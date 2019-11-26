@@ -4,18 +4,23 @@ export default function checkLogin() {
   const cookies = {};
   let startIndex = 0;
   let middleIndex = rawCookies.indexOf("=");
-  let endIndex = rawCookies.indexOf(";");
+  let endIndex =
+    rawCookies.indexOf(";") === -1
+      ? rawCookies.length
+      : rawCookies.indexOf(";");
 
-  while (middleIndex !== -1 && endIndex !== -1) {
+  while (middleIndex !== -1) {
     cookies[
       rawCookies.substring(startIndex, middleIndex)
-    ] = rawCookies.substring(startIndex + 1, endIndex);
+    ] = rawCookies.substring(middleIndex + 1, endIndex);
 
     startIndex = endIndex + 2;
     middleIndex = rawCookies.indexOf("=", startIndex);
-    endIndex = rawCookies.indexOf(";", startIndex);
-    break;
+    endIndex =
+      rawCookies.indexOf(";", startIndex) === -1
+        ? rawCookies.length
+        : rawCookies.indexOf(";", startIndex);
   }
-  console.log(cookies, middleIndex, endIndex, rawCookies);
-  return rawCookies.login;
+
+  return cookies.login === "true";
 }

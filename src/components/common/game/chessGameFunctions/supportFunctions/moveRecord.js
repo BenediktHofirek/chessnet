@@ -1,5 +1,3 @@
-import { exportDefaultSpecifier } from "@babel/types";
-
 export default function moveRecord(firstF, secondF, position, gameRecord) {
   const piece = firstF.piece.slice(5) === "Pawn" ? "" : firstF.piece.slice(5);
 

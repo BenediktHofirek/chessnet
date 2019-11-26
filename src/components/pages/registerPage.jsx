@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Header from "../common/header";
 import { Link } from "react-router-dom";
+import login from "../others/login";
 
 class RegisterPage extends Component {
   constructor() {
@@ -36,6 +37,9 @@ class RegisterPage extends Component {
     );
     const responseBody = await response.text();
     console.log(responseBody);
+    if (response.status[0] === "2") {
+      login();
+    }
   }
 
   render() {
