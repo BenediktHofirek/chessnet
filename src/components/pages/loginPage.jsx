@@ -31,11 +31,12 @@ class LoginPage extends Component {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
         },
-        body: `username=${username}&password=${password}`
+        body: `username=${username}&password=${password}`,
+        credentials: 'include'
       }
     );
     const responseBody = await response.text();
-      console.log(response, responseBody);
+      console.log(responseBody);
     // if (`${response.status}`[0] === "2") {
     //   login();
     // }
