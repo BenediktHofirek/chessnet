@@ -10,25 +10,13 @@
   float: left;
 }
 
-.game .newGameSidebar {
-  width: 55%;
-  height: 5vh;
-  float: left;
-}
-
-.game .gameControlSidebar {
-  width: 5%;
-  height: 65vh;
-  float: left;
-}
-
-.game .chat {
+.game .gameDatabase {
   width: 50%;
   height: 20vh;
   float: left;
 }
 
-.game .gameDatabase {
+.game .chat {
   width: 50%;
   height: 20vh;
   float: left;
@@ -40,33 +28,51 @@
   float: left;
 }
 
-.game .chessboard {
-  width: 45%;
+.game .chessBoardWrapper {
+  width: 50%;
+  height: 70vh;
+  float: left;
+}
+
+.game .chessBoardWrapper .newGameSidebar {
+  width: 100%;
+  height: 5vh;
+  float: left;
+}
+
+.game .chessBoardWrapper .gameControlSidebar {
+  width: 10%;
+  height: 65vh;
+  float: left;
+}
+
+.game .chessBoardWrapper .chessboard {
+  width: 90%;
   height: 65vh;
   float: left;
   padding-left: 5vw;
 }
 
-.game .chessboard .board {
+.game .chessBoardWrapper .chessboard .board {
   float: left;
   margin: auto;
   border: 5px solid black;
 }
 
-.game .chessboard .board .board-row {
+.game .chessBoardWrapper .chessboard .board .board-row {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
-.game .chessboard .board .board-row .board-field {
+.game .chessBoardWrapper .chessboard .board .board-row .board-field {
   border: none;
   position: relative;
   width: 40px;
   height: 40px;
 }
 
-.game .chessboard .board .board-row .board-field .piece {
+.game .chessBoardWrapper .chessboard .board .board-row .board-field .piece {
   margin: 0;
   position: absolute;
   top: 50%;
@@ -77,15 +83,15 @@
   height: 35px;
 }
 
-.game .chessboard .board .board-row .white {
+.game .chessBoardWrapper .chessboard .board .board-row .white {
   background: #e0e099;
 }
 
-.game .chessboard .board .board-row .black {
+.game .chessBoardWrapper .chessboard .board .board-row .black {
   background: #6d6d60;
 }
 
-.game .chessboard .board .board-row .clicked {
+.game .chessBoardWrapper .chessboard .board .board-row .clicked {
   border: 2px solid yellowgreen;
 }
 

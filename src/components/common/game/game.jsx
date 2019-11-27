@@ -181,25 +181,22 @@ export default class Game extends Component {
   render() {
     const { position, gameRecord } = this.state;
     const {mode} = this.props;
+    const childComponent = {
+      play: <Chat/>,
+      analyse: <GameDatabase/>
+    }
     return (
       <div className={"game " + mode}>
+        <div className="chessBoardWrapper">
         {mode === 'play' && <NewGameSidebar/>}
         <Chessboard
           position={position}
           handleFieldClick={this.handleFieldClick}
         />
         {mode === 'play' && <GameControlSidebar/>}
+        </div>
         <Notation gameRecord={gameRecord} />
-        {() => {
-          switch(mode){
-          case "play":
-            return <Chat/>;
-          case "analyse":
-            return <GameDatabase/>;
-          default:
-            return null;
-        }
-      }}
+        {childComponent[mode]}
         </div>
     );
   }
