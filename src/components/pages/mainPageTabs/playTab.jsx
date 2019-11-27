@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Game from "../../common/game/game";
-import Chat from '../../common/gameDatabase';
+import Chat from '../../common/chat';
 
 class PlayTab extends Component {
   state = {};
