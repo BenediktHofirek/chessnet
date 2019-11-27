@@ -1,21 +1,19 @@
 import React, { Component } from 'react';
-import c from "../../others/c";
 
 class NewGameSidebar extends Component {
     constructor(){
         super();
         this.state = {
             timeControlOptions: ["5:0","3+2","3:0"],
+            preferedTimeControlOptions: ["short", "long"],
             timeControl: ["5:0"],
-            preferedTimeControl: "short"
+            preferedTimeControl: ["short"]
         }
-        // this.handleTimeControlChange = this.handleTimeControlChange.bind(this);
-        // this.handlePreferedTimeControlChange = this.handlePreferedTimeControlChange.bind(this);
     }
 
     handleTimeControlChange = (event) => {
         const tempo = event.target.name;
-        const oldTimeControl = c([...this.state.timeControl]);
+        const oldTimeControl = [...this.state.timeControl];
         const newTimeControl = [];
         if(oldTimeControl.includes(tempo)){
             oldTimeControl.forEach(e => {
@@ -34,15 +32,30 @@ class NewGameSidebar extends Component {
         this.setState({timeControl: newTimeControl});
       }
 
-    handlePreferedTimeControlChange = (event) => {
-        const name = event.target.name;
-        const value = event.target.value;
-        this.setState({ [name]: value });
-    }
+      handleTimeControlChange = (event) => {
+        const tempo = event.target.name;
+        const oldPreferedTimeControl = [...this.state.preferedTimeControl];
+        const newPreferedTimeControl = [];
+        if(oldPreferedTimeControl.includes(tempo)){
+            oldPreferedTimeControl.forEach(e => {
+                if(e !== tempo){
+                    newPreferedTimeControl.push(e);
+                }
+            });
+        }
+        else{
+            oldPreferedTimeControl.forEach(e => {
+                newPreferedTimeControl.push(e);
+            });
+            newPreferedTimeControl.push(tempo);
+        }
+        
+        this.setState({preferedTimeControl: newPreferedTimeControl});
+      }
     
 
     render() { 
-        const {timeControl, preferedTimeControl, timeControlOptions} = this.state;
+        const {timeControl, preferedTimeControl, timeControlOptions, preferedTimeControlOptions} = this.state;
         const {handleNewGame} = this.props;
         console.log(timeControl);
         return ( 
@@ -66,6 +79,25 @@ class NewGameSidebar extends Component {
                         </label>
                     </div>
                     })}
+                    {timeControl.length > 2 && 
+                    <React.Fragment>
+                    <div>Prefered game tempo</div>
+                        {preferedTimeControlOptions.map((option, index) => {
+                        return <div className="form-check" key={index}>
+                            <input 
+                            name={option} 
+                            onChange={this.handleTimeControlChange} 
+                            checked={preferedTimeControl.includes(option)} 
+                            className="form-check-input" 
+                            type="checkbox" 
+                            id={option}/>
+                            <label className="form-check-label" htmlFor={option}>
+                                {option}
+                            </label>
+                        </div>
+                        })}
+                    </React.Fragment>
+                    }
                     <div>
                         <button>Ok</button>
                     </div>
