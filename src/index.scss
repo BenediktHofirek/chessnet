@@ -40,14 +40,16 @@
         float: left;
       }
 
-      .timeControl{
+      .timeControl{                                                                             
         position: relative;
         display: inline-block;
 
         .timeControlDropdown {
           display: none;
           position: absolute;
+          margin-top: 5vh;
           z-index: 1;
+          background-color: white;
           min-width: 5vw;
         }
 

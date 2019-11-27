@@ -14,7 +14,9 @@ class NewGameSidebar extends Component {
 
     handleShowDropdown = () =>{
         this.setState((prevState) => {
-            showDropdown = !prevState.showDropdown;
+            return {
+                showDropdown: !prevState.showDropdown
+            }
         });
     }
 
@@ -46,7 +48,11 @@ class NewGameSidebar extends Component {
     
 
     render() { 
-        const {timeControl, preferedTimeControl, timeControlOptions, preferedTimeControlOptions} = this.state;
+        const {showDropdown, 
+            timeControl, 
+            preferedTimeControl, 
+            timeControlOptions, 
+            preferedTimeControlOptions} = this.state;
         const {handleNewGame} = this.props;
         console.log(timeControl);
         return ( 
@@ -54,7 +60,7 @@ class NewGameSidebar extends Component {
             <button onClick={handleNewGame(timeControl, preferedTimeControl)}>New Game</button>
             <div className="timeControl">
                 <button onClick={this.handleShowDropdown}>Manage game tempo</button>
-                <div className="timeControlDropdown">
+                <div className={showDropdown ? "timeControlDropdown show" : "timeControlDropdown"}>
                     <div>Choose time control(s):</div>
                     {timeControlOptions.map((option, index) => {
                     return <div className="form-check" key={index}>
@@ -88,7 +94,7 @@ class NewGameSidebar extends Component {
                     </div>
                     })}
                     <div>
-                        <button>Ok</button>
+                        <button onClick={this.handleShowDropdown}>Ok</button>
                     </div>
                 </div>
             </div>
