@@ -5,9 +5,9 @@ class NewGameSidebar extends Component {
         super();
         this.state = {
             timeControlOptions: ["5:0","3+2","3:0"],
-            preferedTimeControlOptions: ["short", "long"],
+            preferedTimeControlOptions: ["shorter", "longer"],
             timeControl: ["5:0"],
-            preferedTimeControl: "short",
+            preferedTimeControl: "shorter",
             showDropdown: false
         }
     }
@@ -76,7 +76,7 @@ class NewGameSidebar extends Component {
                         </label>
                     </div>
                     })}
-                    <div>Prefered game tempo:</div>
+                    <div>You prefer</div>
                     {preferedTimeControlOptions.map((option, index) => {
                     return <div className="form-check" key={index}>
                         <input 
@@ -89,7 +89,7 @@ class NewGameSidebar extends Component {
                         disabled={timeControl.length > 1 ? false : true}
                         />
                         <label className="form-check-label" htmlFor={option}>
-                            {option}
+                            {option + " tempo"}
                         </label>
                     </div>
                     })}
