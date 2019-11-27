@@ -13,22 +13,26 @@ class NewGameSidebar extends Component {
     }
 
     handleTimeControlChange = (event) => {
-        console.log(event.target.name, this);
-        // const name = event.target.name;
-        // const value = ev ent.target.value;
-        // this.setState({ [name]: value });
+        const tempo = event.target.name;
+        const oldTimeControl = [...this.state.timeControl];
+        const newTimeControl = oldTimeControl.includes(tempo) ? 
+            oldTimeControl.filter(c => c !== tempo) :
+            oldTimeControl.push(tempo);
+        console.log(g)
+        this.setState({timeControl: newTimeControl});
       }
 
     handlePreferedTimeControlChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    this.setState({ [name]: value });
+    // const name = event.target.name;
+    // const value = event.target.value;
+    // this.setState({ [name]: value });
     }
     
 
     render() { 
         const {timeControl, preferedTimeControl, timeControlOptions} = this.state;
         const {handleNewGame} = this.props;
+        console.log(timeControl);
         return ( 
         <div className="newGameSidebar">
             <button onClick={handleNewGame(timeControl, preferedTimeControl)}>New Game</button>
@@ -37,9 +41,15 @@ class NewGameSidebar extends Component {
                 <div className="timeControlDropdown">
                     <div>Choose time control(s):</div>
                     {timeControlOptions.map((option, index) => {
-                    return <div class="form-check" key={index}>
-                        <input name={option} onChange={this.handleTimeControlChange} checked={timeControl.includes(option)} class="form-check-input" type="checkbox" id={option}/>
-                        <label class="form-check-label" or={option}>
+                    return <div className="form-check" key={index}>
+                        <input 
+                        name={option} 
+                        onChange={this.handleTimeControlChange} 
+                        checked={timeControl.includes(option)} 
+                        className="form-check-input" 
+                        type="checkbox" 
+                        id={option}/>
+                        <label className="form-check-label" htmlFor={option}>
                             {option[0] + "min" + (option[2] === "0" ? "" : "+" + option[2] + "s")}
                         </label>
                     </div>
