@@ -178,6 +178,10 @@ export default class Game extends Component {
     }
   };
 
+  handleNewGame = (timeControl, preferedTimeControl) => {
+
+  }
+
   render() {
     const { position, gameRecord } = this.state;
     const {mode} = this.props;
@@ -188,7 +192,7 @@ export default class Game extends Component {
     return (
       <div className={"game " + mode}>
         <div className="chessBoardWrapper">
-        {mode === 'play' && <NewGameSidebar/>}
+        {mode === 'play' && <NewGameSidebar handleNewGame={this.handleNewGame}/>}
         <Chessboard
           position={position}
           handleFieldClick={this.handleFieldClick}
