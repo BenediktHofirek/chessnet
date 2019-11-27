@@ -6,6 +6,26 @@ import Navigation from "../../components/common/navigation";
 import HomeTab from "./mainPageTabs/homeTab";
 import PlayTab from "./mainPageTabs/playTab";
 export default class MainPage extends Component {
+  constructor(){
+    super();
+    this.state = {
+      username: ""
+    }
+  }
+
+  async componentDidMount(){
+    const response = await fetch(
+      // `http://127.0.0.1/service/getUsername`,
+      "http://localhost:8080?parameters=getUsername",
+      {
+        method: "GET",
+        credentials: 'include'
+      }
+    );
+    const username = await response.text();
+    this.setState({username});
+  }
+
   render() {
     return (
       <div>
@@ -16,7 +36,7 @@ export default class MainPage extends Component {
             <Redirect to="/home" />
           </Route>
           <Route path="/home">
-            <HomeTab />
+            <HomeTab username={username}/>
           </Route>
           <Route path="/play">
             <PlayTab />
