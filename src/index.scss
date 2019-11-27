@@ -35,6 +35,26 @@
       width: 100%;
       height: 5vh;
       float: left;
+
+      button {
+        float: left;
+      }
+
+      .timeControl{
+        position: relative;
+        display: inline-block;
+
+        .timeControlDropdown {
+          display: none;
+          position: absolute;
+          z-index: 1;
+          min-width: 5vw;
+        }
+
+        .show{
+          display: block;
+        }
+      }
     }
 
     .gameControlSidebar {

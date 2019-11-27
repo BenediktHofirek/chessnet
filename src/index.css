@@ -40,6 +40,26 @@
   float: left;
 }
 
+.game .chessBoardWrapper .newGameSidebar button {
+  float: left;
+}
+
+.game .chessBoardWrapper .newGameSidebar .timeControl {
+  position: relative;
+  display: inline-block;
+}
+
+.game .chessBoardWrapper .newGameSidebar .timeControl .timeControlDropdown {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  min-width: 5vw;
+}
+
+.game .chessBoardWrapper .newGameSidebar .timeControl .show {
+  display: block;
+}
+
 .game .chessBoardWrapper .gameControlSidebar {
   width: 25%;
   height: 65vh;
