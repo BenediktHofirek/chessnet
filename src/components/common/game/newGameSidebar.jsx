@@ -30,24 +30,28 @@ class NewGameSidebar extends Component {
         const {handleNewGame} = this.props;
         return ( <div className="newGameSidebar">
             <button onClick={handleNewGame(timeControl, preferedTimeControl)}>New Game</button>
-            <form>
-            <label>
-            Time control(s):
-            </label>
-            <select multiple={true} value={timeControl} onChange={this.handleTimeControlChange}>
-                <option value="5:0">5</option>
-                <option value="3:2">3+2</option>
-                <option value="3:0">3</option>
-                <option value="1:0">1</option>
-            </select>
-            <label>
-            You prefer:
-            </label>
-            <select value={preferedTimeControl} onChange={this.handlePreferedTimeControlChange}>
-                <option value="short">Shorter time control</option>
-                <option value="long">Longer time control</option>
-            </select>
-            </form>
+            <div className="timeControl">
+                <button>Manage Time Controls</button>
+                <div className="timeControlDropdown">
+                    <form>
+                        <label>
+                        Choose Time control(s):
+                        </label>
+                            <option value="5:0">5</option>
+                            <option value="3:2">3+2</option>
+                            <option value="3:0">3</option>
+                            <option value="1:0">1</option>
+                        <label>
+                        You prefer:
+                        </label>
+                        <select value={preferedTimeControl} onChange={this.handlePreferedTimeControlChange}>
+                            <option value="short">Shorter time control</option>
+                            <option value="long">Longer time control</option>
+                        </select>
+                    </form>
+                    <button>Ok</button>
+                </div>
+            </div>
         </div> );
     }
 }
