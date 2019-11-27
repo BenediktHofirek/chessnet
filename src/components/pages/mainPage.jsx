@@ -5,6 +5,7 @@ import Header from "../common/header";
 import Navigation from "../../components/common/navigation";
 import HomeTab from "./mainPageTabs/homeTab";
 import PlayTab from "./mainPageTabs/playTab";
+
 export default class MainPage extends Component {
   constructor(){
     super();

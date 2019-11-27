@@ -45,6 +45,12 @@ class NewGameSidebar extends Component {
         const tempo = event.target.name;
         this.setState({preferedTimeControl: tempo});
       }
+
+      formatTimeControl = (timeControl, preferedTimeControl) => {
+        if(preferedTimeControl === 'shorter'){
+            
+        }
+      }
     
 
     render() { 
@@ -57,7 +63,7 @@ class NewGameSidebar extends Component {
         console.log(timeControl);
         return ( 
         <div className="newGameSidebar">
-            <button onClick={handleNewGame(timeControl, preferedTimeControl)}>New Game</button>
+            <button onClick={handleNewGame(this.formatTimeControl(timeControl, preferedTimeControl))}>New Game</button>
             <div className="timeControl">
                 <button onClick={this.handleShowDropdown}>Manage game tempo</button>
                 <div className={showDropdown ? "timeControlDropdown show" : "timeControlDropdown"}>
