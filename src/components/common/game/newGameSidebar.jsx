@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import c from "../../others/c";
 
 class NewGameSidebar extends Component {
     constructor(){
@@ -14,18 +15,29 @@ class NewGameSidebar extends Component {
 
     handleTimeControlChange = (event) => {
         const tempo = event.target.name;
-        const oldTimeControl = [...this.state.timeControl];
-        const newTimeControl = oldTimeControl.includes(tempo) ? 
-            oldTimeControl.filter(c => c !== tempo) :
-            oldTimeControl.push(tempo);
-        console.log(g)
+        const oldTimeControl = c([...this.state.timeControl]);
+        const newTimeControl = [];
+        if(oldTimeControl.includes(tempo)){
+            oldTimeControl.forEach(e => {
+                if(e !== tempo){
+                    newTimeControl.push(e);
+                }
+            });
+        }
+        else{
+            oldTimeControl.forEach(e => {
+                newTimeControl.push(e);
+            });
+            newTimeControl.push(tempo);
+        }
+        
         this.setState({timeControl: newTimeControl});
       }
 
     handlePreferedTimeControlChange = (event) => {
-    // const name = event.target.name;
-    // const value = event.target.value;
-    // this.setState({ [name]: value });
+        const name = event.target.name;
+        const value = event.target.value;
+        this.setState({ [name]: value });
     }
     
 
