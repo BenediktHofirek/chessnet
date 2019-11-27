@@ -116,7 +116,7 @@ export default class Game extends Component {
   };
 
   handleMove = (firstClickedField, secondClickedField) => {
-    const { castlingRights, position, sideToMove, gameRecord } = this.state;
+    const { castlingRights, position, sideToMove, gameRecord, webSocket } = this.state;
     const castlingR = c(castlingRights);
     const newPosition = c(position);
     const updatedGameRecord = c(gameRecord);
@@ -175,6 +175,12 @@ export default class Game extends Component {
           gameRecord: updatedGameRecord
         };
       });
+
+      webSocket.send(JSON.stringify({
+        firstField: firstClickedField, 
+          secondField: secondClickedField,
+        moveRecord: c(updatedGameRecord).pop()
+      }));
     }
   };
 
@@ -188,9 +194,13 @@ export default class Game extends Component {
           this.setState(data);
           break;
         case "handleMove":
-          this.makeMove()
+          this.makeMove(data.firstField, data.secondField);
+        break;
+          default: break;
       }
     });
+
+    this.setState({webSocket: socket});
   }
 
   render() {
