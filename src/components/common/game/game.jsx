@@ -178,8 +178,8 @@ export default class Game extends Component {
     }
   };
 
-  handleNewGame = (timeControl, preferedTimeControl) => {
-
+  handleNewGame = (timeControl) => {
+    console.log(timeControl);
   }
 
   render() {

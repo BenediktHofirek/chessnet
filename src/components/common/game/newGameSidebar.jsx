@@ -48,7 +48,9 @@ class NewGameSidebar extends Component {
 
       formatTimeControl = (timeControl, preferedTimeControl) => {
         if(preferedTimeControl === 'shorter'){
-            
+            return timeControl.sort((a,b) => Number(`${a[0]+a[2]}`)-Number(`${b[0]+b[2]}`));
+        }else{
+            return timeControl.sort((a,b) => Number(`${b[0]+b[2]}`)-Number(`${a[0]+a[2]}`));
         }
       }
     
@@ -60,14 +62,13 @@ class NewGameSidebar extends Component {
             timeControlOptions, 
             preferedTimeControlOptions} = this.state;
         const {handleNewGame} = this.props;
-        console.log(timeControl);
         return ( 
         <div className="newGameSidebar">
-            <button onClick={handleNewGame(this.formatTimeControl(timeControl, preferedTimeControl))}>New Game</button>
+            <button onClick={() => handleNewGame(this.formatTimeControl(timeControl, preferedTimeControl))}>New Game</button>
             <div className="timeControl">
                 <button onClick={this.handleShowDropdown}>Manage game tempo</button>
                 <div className={showDropdown ? "timeControlDropdown show" : "timeControlDropdown"}>
-                    <div>Choose time control(s):</div>
+                    <div>Time control(s):</div>
                     {timeControlOptions.map((option, index) => {
                     return <div className="form-check" key={index}>
                         <input 
