@@ -10,6 +10,18 @@
   float: left;
 }
 
+.game .newGameSidebar {
+  width: 55%;
+  height: 5vh;
+  float: left;
+}
+
+.game .gameControlSidebar {
+  width: 5%;
+  height: 65vh;
+  float: left;
+}
+
 .game .chat {
   width: 50%;
   height: 20vh;
@@ -29,8 +41,8 @@
 }
 
 .game .chessboard {
-  width: 50%;
-  height: 70vh;
+  width: 45%;
+  height: 65vh;
   float: left;
   padding-left: 5vw;
 }

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import c from "../../others/c";
 import Notation from "./notation";
 import Chessboard from "./chessboard";
 import checkMove from "./chessGameFunctions/supportFunctions/checkMove";
@@ -7,7 +8,8 @@ import makeMove from "./chessGameFunctions/supportFunctions/makeMove";
 import moveRecord from "./chessGameFunctions/supportFunctions/moveRecord";
 import Chat from './chat';
 import GameDatabase from './gameDatabase';
-import c from "../../others/c";
+import GameControlSidebar from "./gameControlSidebar";
+import NewGameSidebar from './newGameSidebar';
 
 export default class Game extends Component {
   constructor() {
@@ -180,11 +182,13 @@ export default class Game extends Component {
     const { position, gameRecord } = this.state;
     const {mode} = this.props;
     return (
-      <div className="game">
+      <div className={"game " + mode}>
+        {mode === 'play' && <NewGameSidebar/>}
         <Chessboard
           position={position}
           handleFieldClick={this.handleFieldClick}
         />
+        {mode === 'play' && <GameControlSidebar/>}
         <Notation gameRecord={gameRecord} />
         {() => {
           switch(mode){
