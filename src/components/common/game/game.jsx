@@ -178,8 +178,18 @@ export default class Game extends Component {
     }
   };
 
-  handleNewGame = (timeControl) => {
-    console.log(timeControl);
+  handleNewGame = async(timeControl) => {
+    const response = await fetch(
+      `http://127.0.0.1/service/newGame`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: `time_control=${JSON.stringify(timeControl)}`,
+        credentials: 'include'
+      }
+    );
   }
 
   render() {
