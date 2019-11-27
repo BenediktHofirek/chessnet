@@ -5,6 +5,8 @@ import checkMove from "./chessGameFunctions/supportFunctions/checkMove";
 import checkGameEnd from "./chessGameFunctions/gameEndFunctions/checkGameEnd";
 import makeMove from "./chessGameFunctions/supportFunctions/makeMove";
 import moveRecord from "./chessGameFunctions/supportFunctions/moveRecord";
+import Chat from './chat';
+import GameDatabase from './gameDatabase';
 import c from "../../others/c";
 
 export default class Game extends Component {
@@ -176,15 +178,25 @@ export default class Game extends Component {
 
   render() {
     const { position, gameRecord } = this.state;
-
+    const {mode} = this.props;
     return (
-      <React.Fragment>
+      <div className="game">
         <Chessboard
           position={position}
           handleFieldClick={this.handleFieldClick}
         />
         <Notation gameRecord={gameRecord} />
-      </React.Fragment>
+        {() => {
+          switch(mode){
+          case "play":
+            return <Chat/>;
+          case "analyse":
+            return <GameDatabase/>;
+          default:
+            return null;
+        }
+      }}
+        </div>
     );
   }
 }
