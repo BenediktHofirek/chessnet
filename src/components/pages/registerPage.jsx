@@ -25,8 +25,7 @@ class RegisterPage extends Component {
     const { username, password, email } = this.state;
     event.preventDefault();
     const response = await fetch(
-      // `http://127.0.0.1/service/register`,
-      "http://localhost:8080?parameters=register",
+      `http://127.0.0.1/service/register`,
       {
         method: "POST",
         headers: {

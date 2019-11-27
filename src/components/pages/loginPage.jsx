@@ -24,8 +24,7 @@ class LoginPage extends Component {
     const { username, password } = this.state;
     event.preventDefault();
     const response = await fetch(
-      // `http://127.0.0.1/service/register`,
-      "http://localhost:8080?parameters=login",
+      `http://127.0.0.1/service/register`,
       {
         method: "POST",
         headers: {

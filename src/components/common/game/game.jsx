@@ -178,13 +178,13 @@ export default class Game extends Component {
     const { position, gameRecord } = this.state;
 
     return (
-      <div className={"game"}>
+      <React.Fragment>
         <Chessboard
           position={position}
           handleFieldClick={this.handleFieldClick}
         />
         <Notation gameRecord={gameRecord} />
-      </div>
+      </React.Fragment>
     );
   }
 }

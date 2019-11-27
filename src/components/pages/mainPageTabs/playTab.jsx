@@ -1,10 +1,14 @@
 import React, { Component } from "react";
 import Game from "../../common/game/game";
+import Chat from '../../common/gameDatabase';
 
 class PlayTab extends Component {
   state = {};
   render() {
-    return <Game />;
+    return <div className="game">
+      <Game />
+      <Chat />
+      </div>;
   }
 }
 
