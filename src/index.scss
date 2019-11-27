@@ -50,7 +50,8 @@
           margin-top: 5vh;
           z-index: 1;
           background-color: white;
-          min-width: 5vw;
+          width: 100%;
+          overflow: auto;
         }
 
         .show{
