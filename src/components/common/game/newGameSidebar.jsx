@@ -18,7 +18,7 @@ class NewGameSidebar extends Component {
         // this.setState({ [name]: value });
       }
 
-    handleTimeControlChange = (event) => {
+    handlePreferedTimeControlChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
     this.setState({ [name]: value });
@@ -28,31 +28,38 @@ class NewGameSidebar extends Component {
     render() { 
         const {timeControl, preferedTimeControl} = this.state;
         const {handleNewGame} = this.props;
-        return ( <div className="newGameSidebar">
+        return ( 
+        <div className="newGameSidebar">
             <button onClick={handleNewGame(timeControl, preferedTimeControl)}>New Game</button>
             <div className="timeControl">
                 <button>Manage Time Controls</button>
                 <div className="timeControlDropdown">
-                    <form>
-                        <label>
-                        Choose Time control(s):
+                    <div>Choose Time control(s):</div>
+                    <div class="form-check">
+                        <input value="" class="form-check-input" type="checkbox" id="checkbox1"/>
+                        <label class="form-check-label" for="checkbox1">
+                            5min
                         </label>
-                            <option value="5:0">5</option>
-                            <option value="3:2">3+2</option>
-                            <option value="3:0">3</option>
-                            <option value="1:0">1</option>
-                        <label>
-                        You prefer:
+                    </div>
+                    <div class="form-check">
+                        <input value="" class="form-check-input" type="checkbox" id="checkbox2"/>
+                        <label class="form-check-label" for="checkbox2">
+                            3min+2s
                         </label>
-                        <select value={preferedTimeControl} onChange={this.handlePreferedTimeControlChange}>
-                            <option value="short">Shorter time control</option>
-                            <option value="long">Longer time control</option>
-                        </select>
-                    </form>
-                    <button>Ok</button>
+                    </div>
+                    <div class="form-check">
+                        <input value="" class="form-check-input" type="checkbox" id="checkbox3"/>
+                        <label class="form-check-label" for="checkbox3">
+                            3min
+                        </label>
+                    </div>
+                    <div>
+                        <button>Ok</button>
+                    </div>
                 </div>
             </div>
-        </div> );
+        </div> 
+        );
     }
 }
  
