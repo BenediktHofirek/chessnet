@@ -180,8 +180,17 @@ export default class Game extends Component {
 
   handleNewGame = async(timeControl) => {
     const socket = new WebSocket('wss://localhost:8080');
-    socket.onopen(() => socket.send(JSON.stringify(time)));
-    socket.onmessage
+    socket.onopen(() => socket.send(JSON.stringify(timeControl)));
+    socket.onmessage((event) => {
+      const data = JSON.parse(event);
+      switch(data.command){
+        case "handleNewGame":
+          this.setState(data);
+          break;
+        case "handleMove":
+          this.makeMove()
+      }
+    });
   }
 
   render() {
