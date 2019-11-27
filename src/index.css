@@ -41,13 +41,13 @@
 }
 
 .game .chessBoardWrapper .gameControlSidebar {
-  width: 10%;
+  width: 25%;
   height: 65vh;
   float: left;
 }
 
 .game .chessBoardWrapper .chessboard {
-  width: 90%;
+  width: 75%;
   height: 65vh;
   float: left;
   padding-left: 5vw;
