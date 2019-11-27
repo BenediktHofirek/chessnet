@@ -7,7 +7,7 @@ class NewGameSidebar extends Component {
             timeControlOptions: ["5:0","3+2","3:0"],
             preferedTimeControlOptions: ["short", "long"],
             timeControl: ["5:0"],
-            preferedTimeControl: ["short"]
+            preferedTimeControl: "short"
         }
     }
 
@@ -32,25 +32,9 @@ class NewGameSidebar extends Component {
         this.setState({timeControl: newTimeControl});
       }
 
-      handleTimeControlChange = (event) => {
+      handlePreferedTimeControlChange = (event) => {
         const tempo = event.target.name;
-        const oldPreferedTimeControl = [...this.state.preferedTimeControl];
-        const newPreferedTimeControl = [];
-        if(oldPreferedTimeControl.includes(tempo)){
-            oldPreferedTimeControl.forEach(e => {
-                if(e !== tempo){
-                    newPreferedTimeControl.push(e);
-                }
-            });
-        }
-        else{
-            oldPreferedTimeControl.forEach(e => {
-                newPreferedTimeControl.push(e);
-            });
-            newPreferedTimeControl.push(tempo);
-        }
-        
-        this.setState({preferedTimeControl: newPreferedTimeControl});
+        this.setState({preferedTimeControl: tempo});
       }
     
 
@@ -79,25 +63,23 @@ class NewGameSidebar extends Component {
                         </label>
                     </div>
                     })}
-                    {timeControl.length > 2 && 
-                    <React.Fragment>
                     <div>Prefered game tempo</div>
-                        {preferedTimeControlOptions.map((option, index) => {
-                        return <div className="form-check" key={index}>
-                            <input 
-                            name={option} 
-                            onChange={this.handleTimeControlChange} 
-                            checked={preferedTimeControl.includes(option)} 
-                            className="form-check-input" 
-                            type="checkbox" 
-                            id={option}/>
-                            <label className="form-check-label" htmlFor={option}>
-                                {option}
-                            </label>
-                        </div>
-                        })}
-                    </React.Fragment>
-                    }
+                    {preferedTimeControlOptions.map((option, index) => {
+                    return <div className="form-check" key={index}>
+                        <input 
+                        name={option} 
+                        onChange={this.handlePreferedTimeControlChange} 
+                        checked={preferedTimeControl === option} 
+                        className="form-check-input" 
+                        type="checkbox" 
+                        id={option}
+                        disabled={timeControl.length > 1 ? false : true}
+                        />
+                        <label className="form-check-label" htmlFor={option}>
+                            {option}
+                        </label>
+                    </div>
+                    })}
                     <div>
                         <button>Ok</button>
                     </div>
