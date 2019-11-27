@@ -4,6 +4,7 @@ class NewGameSidebar extends Component {
     constructor(){
         super();
         this.state = {
+            timeControlOptions: ["5:0","3+2","3:0"],
             timeControl: ["5:0"],
             preferedTimeControl: "short"
         }
@@ -12,7 +13,7 @@ class NewGameSidebar extends Component {
     }
 
     handleTimeControlChange = (event) => {
-        console.log(event.target.name, event.target.value, this);
+        console.log(event.target.name, this);
         // const name = event.target.name;
         // const value = ev ent.target.value;
         // this.setState({ [name]: value });
@@ -26,33 +27,23 @@ class NewGameSidebar extends Component {
     
 
     render() { 
-        const {timeControl, preferedTimeControl} = this.state;
+        const {timeControl, preferedTimeControl, timeControlOptions} = this.state;
         const {handleNewGame} = this.props;
         return ( 
         <div className="newGameSidebar">
             <button onClick={handleNewGame(timeControl, preferedTimeControl)}>New Game</button>
             <div className="timeControl">
-                <button>Manage Time Controls</button>
+                <button>Manage game tempo</button>
                 <div className="timeControlDropdown">
-                    <div>Choose Time control(s):</div>
-                    <div class="form-check">
-                        <input value="" class="form-check-input" type="checkbox" id="checkbox1"/>
-                        <label class="form-check-label" for="checkbox1">
-                            5min
+                    <div>Choose time control(s):</div>
+                    {timeControlOptions.map((option, index) => {
+                    return <div class="form-check" key={index}>
+                        <input name={option} onChange={this.handleTimeControlChange} checked={timeControl.includes(option)} class="form-check-input" type="checkbox" id={option}/>
+                        <label class="form-check-label" or={option}>
+                            {option[0] + "min" + (option[2] === "0" ? "" : "+" + option[2] + "s")}
                         </label>
                     </div>
-                    <div class="form-check">
-                        <input value="" class="form-check-input" type="checkbox" id="checkbox2"/>
-                        <label class="form-check-label" for="checkbox2">
-                            3min+2s
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input value="" class="form-check-input" type="checkbox" id="checkbox3"/>
-                        <label class="form-check-label" for="checkbox3">
-                            3min
-                        </label>
-                    </div>
+                    })}
                     <div>
                         <button>Ok</button>
                     </div>
