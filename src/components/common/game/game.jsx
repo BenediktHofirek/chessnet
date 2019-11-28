@@ -185,6 +185,16 @@ export default class Game extends Component {
   };
 
   handleNewGame = async(timeControl) => {
+    const response = await fetch(
+      `http://127.0.0.1/service/playServer`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        credentials: 'include'
+      }
+    );
     const socket = new WebSocket('ws://127.0.0.1/service/playServer');
     socket.onopen = () => {
       socket.send(JSON.stringify(timeControl));
